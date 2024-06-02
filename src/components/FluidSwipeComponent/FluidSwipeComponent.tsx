@@ -19,7 +19,7 @@ function FluidSwipeComponent() {
 
   const bind = useMove(
     ({ down, movement: [x, y], velocity, initial: [x0, y0] }) => {
-      if (!down) {
+      if (!down && !(x === 0 && y === 0)) {
         setDots((prevDots) => [
           ...prevDots,
           {
