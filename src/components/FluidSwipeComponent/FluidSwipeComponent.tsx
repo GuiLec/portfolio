@@ -40,7 +40,8 @@ function FluidSwipeComponent() {
           ];
         });
       }
-    }
+    },
+    { preventDefault: true }
   );
 
   useEffect(() => {
