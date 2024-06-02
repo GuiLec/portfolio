@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useDrag, useMove } from "@use-gesture/react";
+import { useMove } from "@use-gesture/react";
 
 const CIRCLE_INITIAL_SIZE = 50;
 const MAX_NUMBER_OF_DOTS = 200;
@@ -20,7 +20,7 @@ function FluidSwipeComponent() {
 
   const bind = useMove(
     ({ down, movement: [x, y], velocity, initial: [x0, y0] }) => {
-      if (!down && !(x === 0 && y === 0)) {
+      if (down && !(x === 0 && y === 0)) {
         setDots((prevDots) => {
           const limitedPrevDots =
             prevDots.length >= MAX_NUMBER_OF_DOTS
