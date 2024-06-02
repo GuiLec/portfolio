@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDrag, useMove } from "@use-gesture/react";
 
 const CIRCLE_INITIAL_SIZE = 50;
+const MAX_NUMBER_OF_DOTS = 200;
 
 function FluidSwipeComponent() {
   const [dots, setDots] = useState<
@@ -20,18 +21,24 @@ function FluidSwipeComponent() {
   const bind = useMove(
     ({ down, movement: [x, y], velocity, initial: [x0, y0] }) => {
       if (!down && !(x === 0 && y === 0)) {
-        setDots((prevDots) => [
-          ...prevDots,
-          {
-            x: x0 + x - CIRCLE_INITIAL_SIZE / 2,
-            y: y0 + y - CIRCLE_INITIAL_SIZE / 2,
-            vx: (velocity[0] * x) / Math.abs(x),
-            vy: (velocity[1] * y) / Math.abs(y),
-            size: CIRCLE_INITIAL_SIZE,
-            opacity: 1,
-            color: `hsla(${Math.random() * 360}, 100%, 50%, 1)`,
-          },
-        ]);
+        setDots((prevDots) => {
+          const limitedPrevDots =
+            prevDots.length >= MAX_NUMBER_OF_DOTS
+              ? prevDots.slice(1)
+              : prevDots;
+          return [
+            ...limitedPrevDots,
+            {
+              x: x0 + x - CIRCLE_INITIAL_SIZE / 2,
+              y: y0 + y - CIRCLE_INITIAL_SIZE / 2,
+              vx: (velocity[0] * x) / Math.abs(x),
+              vy: (velocity[1] * y) / Math.abs(y),
+              size: CIRCLE_INITIAL_SIZE,
+              opacity: 1,
+              color: `hsla(${Math.random() * 360}, 100%, 50%, 1)`,
+            },
+          ];
+        });
       }
     }
   );
