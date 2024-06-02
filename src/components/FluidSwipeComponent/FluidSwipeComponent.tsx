@@ -47,11 +47,11 @@ function FluidSwipeComponent() {
     const animate = () => {
       setDots((prevDots) =>
         prevDots.map(({ x, y, vx, vy, size, opacity, color }) => ({
-          x: x + vx / 4,
-          y: y + vy / 4,
+          x: x + vx,
+          y: y + vy,
           vx,
           vy,
-          size: size + 0.1,
+          size: size + 1,
           opacity: Math.max(opacity - 0.001, 0),
           color,
         }))
