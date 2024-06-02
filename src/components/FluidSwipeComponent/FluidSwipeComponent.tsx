@@ -76,6 +76,7 @@ function FluidSwipeComponent() {
         display: "flex",
         backgroundColor: "blue",
         position: "relative",
+        touchAction: "none",
       }}
     >
       {dots.map(({ x, y, size, opacity, color }, index) => (
