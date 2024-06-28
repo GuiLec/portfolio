@@ -5,6 +5,8 @@ const GRID_SIZE = 30; // Example grid size of 10x10
 // Define the initial state for the grid
 const initialGrid = Array(GRID_SIZE).fill(Array(GRID_SIZE).fill(false)); // false for white, true for black
 
+const SPEED = 2;
+
 const TheGameOfLifePage = () => {
   const [grid, setGrid] = useState(initialGrid);
 
@@ -67,7 +69,7 @@ const TheGameOfLifePage = () => {
     if (hasGameStarted) {
       const interval = setInterval(() => {
         advanceOneRound();
-      }, 1000);
+      }, 1000 / SPEED);
       return () => clearInterval(interval);
     }
   }, [hasGameStarted, advanceOneRound]);
