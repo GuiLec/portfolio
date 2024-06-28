@@ -1,12 +1,10 @@
 import React from "react";
-import FluidSwipeComponent from "@/components/FluidSwipeComponent/FluidSwipeComponent";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <main>
-      <React.StrictMode>
-        <FluidSwipeComponent />
-      </React.StrictMode>
+      <Link href="/digital-art">Digital art</Link>
     </main>
   );
 }
