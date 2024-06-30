@@ -1,22 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
 
-const GRID_SIZE = 30; // Example grid size of 10x10
-// Define the initial state for the grid
-const initialGrid = Array(GRID_SIZE).fill(Array(GRID_SIZE).fill(false)); // false for white, true for black
-
+const GRID_SIZE = 30;
 const SPEED = 2;
+const initialGrid = Array(GRID_SIZE).fill(Array(GRID_SIZE).fill(false));
 
 const TheGameOfLifePage = () => {
   const [grid, setGrid] = useState(initialGrid);
 
-  // Function to toggle square color
   const toggleSquare = (rowIndex: number, colIndex: number) => {
     const newGrid = grid.map((row, rIndex) => {
       if (rIndex === rowIndex) {
         return row.map((col: number, cIndex: number) => {
           if (cIndex === colIndex) {
-            return !col; // Toggle the boolean value
+            return !col;
           }
           return col;
         });
@@ -111,7 +108,6 @@ const TheGameOfLifePage = () => {
         >
           {grid.map((row, rowIndex) => (
             <div key={rowIndex} style={{ display: "flex" }}>
-              {/* This div wraps each row */}
               {row.map((col: number, colIndex: number) => (
                 <div
                   key={`${rowIndex}-${colIndex}`}
