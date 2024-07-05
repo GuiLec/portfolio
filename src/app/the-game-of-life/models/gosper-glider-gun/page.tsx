@@ -1,9 +1,7 @@
-"use client";
 import { TheGameOfLifeTemplate } from "@/app/the-game-of-life/components/TheGameOfLifeTemplate";
 
 const SQUARE_SIZE = 20;
-const GRID_SIZE = Math.ceil((window.innerWidth * 2) / SQUARE_SIZE);
-
+const GRID_SIZE = 100;
 const initialSquares = [
   [2, 8],
   [2, 9],
