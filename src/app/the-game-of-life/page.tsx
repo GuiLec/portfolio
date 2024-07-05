@@ -125,32 +125,34 @@ const TheGameOfLifePage = () => {
         </button>
       </section>
       <br />
-      <section>
-        <div
-          style={{
-            border: "1px solid black",
-            display: "inline-flex",
-            flexDirection: "column",
-          }}
-        >
-          {grid.map((row, rowIndex) => (
-            <div key={rowIndex} style={{ display: "flex" }}>
-              {row.map((col: number, colIndex: number) => (
-                <div
-                  key={`${rowIndex}-${colIndex}`}
-                  onClick={() => toggleSquare(rowIndex, colIndex)}
-                  style={{
-                    width: `${SQUARE_SIZE * zoomLevel}px`,
-                    height: `${SQUARE_SIZE * zoomLevel}px`,
-                    backgroundColor: col ? "black" : "white",
-                    cursor: "pointer",
-                  }}
-                />
-              ))}
-            </div>
-          ))}
-        </div>
-      </section>
+      <div style={{ overflowX: "auto" }}>
+        <section>
+          <div
+            style={{
+              border: "1px solid black",
+              display: "inline-flex",
+              flexDirection: "column",
+            }}
+          >
+            {grid.map((row, rowIndex) => (
+              <div key={rowIndex} style={{ display: "flex" }}>
+                {row.map((col: number, colIndex: number) => (
+                  <div
+                    key={`${rowIndex}-${colIndex}`}
+                    onClick={() => toggleSquare(rowIndex, colIndex)}
+                    style={{
+                      width: `${SQUARE_SIZE * zoomLevel}px`,
+                      height: `${SQUARE_SIZE * zoomLevel}px`,
+                      backgroundColor: col ? "black" : "white",
+                      cursor: "pointer",
+                    }}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
       <div
         style={{
           position: "fixed",
