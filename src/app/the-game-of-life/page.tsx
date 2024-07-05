@@ -15,6 +15,12 @@ const TheGameOfLifePage = () => {
   const decreaseZoom = () =>
     setZoomLevel((prevZoom) => Math.max(prevZoom - 0.1, MIN_ZOOM_LEVEL));
 
+  const [speed, setSpeed] = useState(SPEED);
+  const increaseSpeed = () =>
+    setSpeed((prevSpeed) => Math.min(prevSpeed * 2, 32));
+  const decreaseSpeed = () =>
+    setSpeed((prevSpeed) => Math.max(prevSpeed / 2, 0.5));
+
   const [grid, setGrid] = useState(initialGrid);
 
   const toggleSquare = (rowIndex: number, colIndex: number) => {
@@ -91,10 +97,10 @@ const TheGameOfLifePage = () => {
         if (!hasGameStarted) {
           clearInterval(interval);
         }
-      }, 1000 / SPEED);
+      }, 1000 / speed);
       return () => clearInterval(interval);
     }
-  }, [hasGameStarted, advanceOneRound]);
+  }, [hasGameStarted, advanceOneRound, speed]);
 
   return (
     <main>
@@ -161,10 +167,27 @@ const TheGameOfLifePage = () => {
           zIndex: 1000,
         }}
       >
+        <div>Zoom: {zoomLevel.toFixed(1)}</div>
         <button style={{ padding: "10px" }} onClick={increaseZoom}>
           +
         </button>
         <button style={{ padding: "10px" }} onClick={decreaseZoom}>
+          -
+        </button>
+      </div>
+      <div
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          left: "20px",
+          zIndex: 1000,
+        }}
+      >
+        <div>Speed: {speed.toFixed(1)}</div>
+        <button style={{ padding: "10px" }} onClick={increaseSpeed}>
+          +
+        </button>
+        <button style={{ padding: "10px" }} onClick={decreaseSpeed}>
           -
         </button>
       </div>
