@@ -1,11 +1,20 @@
 "use client";
 import { useEffect, useState } from "react";
 
-const GRID_SIZE = 30;
+const SQUARE_SIZE = 20;
+const GRID_SIZE = Math.ceil((window.innerWidth * 2) / SQUARE_SIZE);
 const SPEED = 2;
 const initialGrid = Array(GRID_SIZE).fill(Array(GRID_SIZE).fill(false));
+const MAX_ZOOM_LEVEL = 2;
+const MIN_ZOOM_LEVEL = 0.3;
 
 const TheGameOfLifePage = () => {
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const increaseZoom = () =>
+    setZoomLevel((prevZoom) => Math.min(prevZoom + 0.1, MAX_ZOOM_LEVEL));
+  const decreaseZoom = () =>
+    setZoomLevel((prevZoom) => Math.max(prevZoom - 0.1, MIN_ZOOM_LEVEL));
+
   const [grid, setGrid] = useState(initialGrid);
 
   const toggleSquare = (rowIndex: number, colIndex: number) => {
@@ -62,10 +71,26 @@ const TheGameOfLifePage = () => {
     setHasGameStarted(true);
   };
 
+  const stopGame = () => {
+    setHasGameStarted(false);
+    setGrid(initialGrid);
+  };
+
+  const toggleGame = () => {
+    if (hasGameStarted) {
+      stopGame();
+    } else {
+      startGame();
+    }
+  };
+
   useEffect(() => {
     if (hasGameStarted) {
       const interval = setInterval(() => {
         advanceOneRound();
+        if (!hasGameStarted) {
+          clearInterval(interval);
+        }
       }, 1000 / SPEED);
       return () => clearInterval(interval);
     }
@@ -95,7 +120,9 @@ const TheGameOfLifePage = () => {
       </p>
       <br />
       <section>
-        <button onClick={startGame}>Start the game</button>
+        <button onClick={toggleGame}>
+          {hasGameStarted ? "Stop the game" : "Start the game"}
+        </button>
       </section>
       <br />
       <section>
@@ -113,8 +140,8 @@ const TheGameOfLifePage = () => {
                   key={`${rowIndex}-${colIndex}`}
                   onClick={() => toggleSquare(rowIndex, colIndex)}
                   style={{
-                    width: "20px",
-                    height: "20px",
+                    width: `${SQUARE_SIZE * zoomLevel}px`,
+                    height: `${SQUARE_SIZE * zoomLevel}px`,
                     backgroundColor: col ? "black" : "white",
                     cursor: "pointer",
                   }}
@@ -124,6 +151,21 @@ const TheGameOfLifePage = () => {
           ))}
         </div>
       </section>
+      <div
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          zIndex: 1000,
+        }}
+      >
+        <button style={{ padding: "10px" }} onClick={increaseZoom}>
+          +
+        </button>
+        <button style={{ padding: "10px" }} onClick={decreaseZoom}>
+          -
+        </button>
+      </div>
     </main>
   );
 };
