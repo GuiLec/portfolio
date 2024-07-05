@@ -25,6 +25,12 @@ const TheGameOfLifePage = () => {
       </p>
       <br />
       <p>
+        <a href="/the-game-of-life/models/gosper-glider-gun">
+          Gosper glider gun
+        </a>
+      </p>
+      <br />
+      <p>
         {
           "Click multiple squares to create an initial configuration, then click on 'Start the game' to see how it evolves."
         }

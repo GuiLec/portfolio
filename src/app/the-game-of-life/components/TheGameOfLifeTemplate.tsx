@@ -22,7 +22,7 @@ export const TheGameOfLifeTemplate = ({
 
   const [speed, setSpeed] = useState(SPEED);
   const increaseSpeed = () =>
-    setSpeed((prevSpeed) => Math.min(prevSpeed * 2, 32));
+    setSpeed((prevSpeed) => Math.min(prevSpeed * 2, 64));
   const decreaseSpeed = () =>
     setSpeed((prevSpeed) => Math.max(prevSpeed / 2, 0.5));
 
