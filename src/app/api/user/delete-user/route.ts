@@ -1,7 +1,7 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url);
   const userFirstName = searchParams.get("first-name");
   const userLastName = searchParams.get("last-name");
@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   try {
     if (!userFirstName || !userLastName)
       throw new Error("First name and last name required");
-    await sql`INSERT INTO Users (FirstName, LastName) VALUES (${userFirstName}, ${userLastName});`;
+    await sql`DELETE FROM Users WHERE FirstName = ${userFirstName} AND LastName = ${userLastName};`;
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }
