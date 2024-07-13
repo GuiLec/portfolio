@@ -5,8 +5,12 @@ export async function GET(request: Request) {
   try {
     const userTable = await sql`SELECT * FROM users;`;
     const users = userTable.rows;
-    return NextResponse.json({ users }, { status: 200 });
+    const response = NextResponse.json({ users }, { status: 200 });
+    response.headers.set("Cache-Control", "no-store");
+    return response;
   } catch (error) {
-    return NextResponse.json({ error }, { status: 500 });
+    const response = NextResponse.json({ error }, { status: 500 });
+    response.headers.set("Cache-Control", "no-store");
+    return response;
   }
 }
