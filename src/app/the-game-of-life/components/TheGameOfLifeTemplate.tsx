@@ -80,6 +80,10 @@ export const TheGameOfLifeTemplate = ({
 
   const startGame = () => {
     setHasGameStarted(true);
+    window.dataLayer.push({
+      event: "cta",
+      name: "start-game-of-life",
+    });
   };
 
   const stopGame = () => {
