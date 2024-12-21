@@ -1,4 +1,6 @@
 "use client";
+import LaunchDarklyProvider from "@/components/LaunchDarklyProvider/LaunchDarklyProvider";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import { useEffect, useState } from "react";
 
 const SPEED = 2;
@@ -114,9 +116,12 @@ export const TheGameOfLifeTemplate = ({
   return (
     <div>
       <section>
-        <button onClick={toggleGame}>
-          {hasGameStarted ? "Stop the game" : "Start the game"}
-        </button>
+        <LaunchDarklyProvider>
+          <StartTheGameButton
+            hasGameStarted={hasGameStarted}
+            onClick={toggleGame}
+          />
+        </LaunchDarklyProvider>
       </section>
       <br />
       <div style={{ overflowX: "auto" }}>
@@ -180,5 +185,25 @@ export const TheGameOfLifeTemplate = ({
         </button>
       </div>
     </div>
+  );
+};
+
+const StartTheGameButton = ({
+  onClick,
+  hasGameStarted,
+}: {
+  onClick: () => void;
+  hasGameStarted: boolean;
+}) => {
+  const { experimentGameOfLivePlayButtonLabelEnabled } = useFlags();
+
+  const startGameLabel = experimentGameOfLivePlayButtonLabelEnabled
+    ? "PLAY"
+    : "Start the game";
+
+  return (
+    <button onClick={onClick}>
+      {hasGameStarted ? "Stop the game" : startGameLabel}
+    </button>
   );
 };
