@@ -22,7 +22,10 @@ const LaunchDarklyProvider: React.FC<LaunchDarklyProviderProps> = ({
   return (
     <LDProvider
       clientSideID={clientSideID}
-      context={{ kind: "user", key: "anonymous" }}
+      context={{
+        kind: "user",
+        key: `anonymous-${Math.random().toString(36).substring(2)}`,
+      }}
     >
       {children}
     </LDProvider>
