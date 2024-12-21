@@ -202,7 +202,7 @@ const StartTheGameButton = ({
     : "Start the game";
 
   return (
-    <button onClick={onClick}>
+    <button id="start-game-of-life" onClick={onClick}>
       {hasGameStarted ? "Stop the game" : startGameLabel}
     </button>
   );
