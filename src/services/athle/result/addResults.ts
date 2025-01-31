@@ -3,10 +3,11 @@ import { sql } from "@vercel/postgres";
 
 export const addResults = async (results: Result[]) => {
   const values = results.flatMap(
-    ({ id, fullName, distance, eventDate, eventLocation }) => [
+    ({ id, fullName, eventType, eventDate, eventLocation, score }) => [
       id,
       fullName,
-      distance,
+      eventType,
+      score,
       eventDate,
       eventLocation,
     ]
@@ -15,18 +16,19 @@ export const addResults = async (results: Result[]) => {
   const placeholders = results
     .map(
       (_, index) =>
-        `($${index * 5 + 1}, $${index * 5 + 2}, $${index * 5 + 3}, $${
-          index * 5 + 4
-        }, $${index * 5 + 5})`
+        `($${index * 6 + 1}, $${index * 6 + 2}, $${index * 6 + 3}, $${
+          index * 6 + 4
+        }, $${index * 6 + 5}, $${index * 6 + 6})`
     )
     .join(", ");
 
   return await sql.query(
     `INSERT INTO AthleResults 
-     (id, fullName, distance, eventDate, eventLocation)
+     (id, fullName, eventType, score, eventDate, eventLocation)
      VALUES ${placeholders}
      ON CONFLICT (id) DO UPDATE SET
-       distance = EXCLUDED.distance,
+       score = EXCLUDED.score,
+       eventType = EXCLUDED.eventType,
        eventDate = EXCLUDED.eventDate,
        eventLocation = EXCLUDED.eventLocation`,
     values

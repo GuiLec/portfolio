@@ -9,7 +9,8 @@ const getId = ({ fullName, eventDate, eventLocation }: Result) =>
 const mockResult: Result = {
   id: "1",
   fullName: "John Doe",
-  distance: 100,
+  score: 1000,
+  eventType: "100m",
   eventDate: "2021-01-01",
   eventLocation: "Paris",
 };
