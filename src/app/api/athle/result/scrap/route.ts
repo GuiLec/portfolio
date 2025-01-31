@@ -29,7 +29,7 @@ export async function POST(request: Request) {
         const cells = row.querySelectorAll('td[class^="datas"]');
 
         const fullName = cells[3]?.textContent?.trim();
-        const eventDate = cells[8]?.textContent?.trim();
+        const eventDate = cells[9]?.textContent?.trim();
         const eventLocation = cells[10]?.textContent?.trim();
         const rawScore = cells[1]?.querySelector("b")?.textContent?.trim();
 
@@ -48,9 +48,9 @@ export async function POST(request: Request) {
       const fullName = rawResult.fullName ?? "";
       const eventDate = rawResult.eventDate ?? "";
       const eventLocation = rawResult.eventLocation ?? "";
-      const id = getId({ fullName, eventDate, eventLocation });
       const eventType = getEventType(rawData.rawSearchDescription);
       const score = parseRawScore(rawResult.rawScore);
+      const id = getId({ fullName, eventDate, eventLocation, score });
 
       return {
         id,
@@ -71,7 +71,6 @@ export async function POST(request: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.log("🚀 ~ GET ~ error:", error);
     return NextResponse.json({ error }, { status: 500 });
   }
 }
@@ -80,11 +79,13 @@ const getId = ({
   fullName,
   eventDate,
   eventLocation,
+  score,
 }: {
   fullName: string;
   eventDate: string;
   eventLocation: string;
-}) => `${fullName}-${eventDate}-${eventLocation}`;
+  score: number;
+}) => `${eventDate}-${eventLocation}-${score}-${fullName}`.slice(0, 50);
 
 const getEventType = (rawSearchDescription?: string | null) => {
   if (!rawSearchDescription) {
