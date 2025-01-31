@@ -1,7 +1,8 @@
 export interface Result {
   id: string;
   fullName: string;
-  distance: number;
+  score: number;
+  eventType: string;
   eventDate: string;
   eventLocation: string;
 }

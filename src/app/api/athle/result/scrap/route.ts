@@ -1,18 +1,8 @@
 import { Result } from "@/modules/result/result.type";
 import { addResults } from "@/services/athle/result/addResults";
+import { parseRawScore } from "@/utils/parseRawScore";
 import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
-
-const getId = ({ fullName, eventDate, eventLocation }: Result) =>
-  `${fullName}-${eventDate}-${eventLocation}`;
-
-const mockResult: Result = {
-  id: "1",
-  fullName: "John Doe",
-  distance: 100,
-  eventDate: "2021-01-01",
-  eventLocation: "Paris",
-};
 
 export async function POST(request: Request) {
   const { targetUrl } = await request.json();
@@ -27,25 +17,81 @@ export async function POST(request: Request) {
 
     await page.setViewport({ width: 1080, height: 1024 });
 
-    const fullNames = await page.$$eval(
-      'td[class^="datas"] a[href^="javascript:bddThrowAthlete"]',
-      (anchors) =>
-        anchors.map((a) => (a.textContent ? a.textContent.trim() : ""))
-    );
+    const rawData = await page.evaluate(() => {
+      const rawSearchDescription = document
+        .querySelector("#ctnBilans tbody tr td div.headers")
+        ?.textContent?.trim();
 
-    const results = fullNames.map((fullName) => ({
-      ...mockResult,
-      id: getId({ ...mockResult, fullName }),
-      fullName,
-    }));
+      const rows = document.querySelectorAll("#ctnBilans tbody tr");
+      const resultRows = Array.from(rows).slice(2);
+
+      const rawResults = resultRows.map((row) => {
+        const cells = row.querySelectorAll('td[class^="datas"]');
+
+        const fullName = cells[3]?.textContent?.trim();
+        const eventDate = cells[9]?.textContent?.trim();
+        const eventLocation = cells[10]?.textContent?.trim();
+        const rawScore = cells[1]?.querySelector("b")?.textContent?.trim();
+
+        return {
+          rawScore,
+          fullName,
+          eventDate,
+          eventLocation,
+        };
+      });
+
+      return { rawResults, rawSearchDescription };
+    });
+
+    const results: Result[] = rawData.rawResults.map((rawResult) => {
+      const fullName = rawResult.fullName ?? "";
+      const eventDate = rawResult.eventDate ?? "";
+      const eventLocation = rawResult.eventLocation ?? "";
+      const eventType = getEventType(rawData.rawSearchDescription);
+      const score = parseRawScore(rawResult.rawScore);
+      const id = getId({ fullName, eventDate, eventLocation, score });
+
+      return {
+        id,
+        fullName,
+        eventDate,
+        eventLocation,
+        score,
+        eventType,
+      };
+    });
 
     await addResults(results);
 
     await browser.close();
 
-    return NextResponse.json({ results }, { status: 200 });
+    return NextResponse.json(
+      { length: results.length, results },
+      { status: 200 }
+    );
   } catch (error) {
-    console.log("🚀 ~ GET ~ error:", error);
     return NextResponse.json({ error }, { status: 500 });
   }
 }
+
+const getId = ({
+  fullName,
+  eventDate,
+  eventLocation,
+  score,
+}: {
+  fullName: string;
+  eventDate: string;
+  eventLocation: string;
+  score: number;
+}) => `${eventDate}-${eventLocation}-${score}-${fullName}`.slice(0, 50);
+
+const getEventType = (rawSearchDescription?: string | null) => {
+  if (!rawSearchDescription) {
+    return "";
+  }
+
+  const eventType = rawSearchDescription.split(" | ")[1];
+  return eventType;
+};
