@@ -3,17 +3,15 @@ import { addResults } from "@/services/athle/result/addResults";
 import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 
-const getId = ({ fullName, eventDate, eventLocation }: Result) =>
-  `${fullName}-${eventDate}-${eventLocation}`;
-
-const mockResult: Result = {
-  id: "1",
-  fullName: "John Doe",
-  score: 1000,
-  eventType: "100m",
-  eventDate: "2021-01-01",
-  eventLocation: "Paris",
-};
+const getId = ({
+  fullName,
+  eventDate,
+  eventLocation,
+}: {
+  fullName: string;
+  eventDate: string;
+  eventLocation: string;
+}) => `${fullName}-${eventDate}-${eventLocation}`;
 
 export async function POST(request: Request) {
   const { targetUrl } = await request.json();
@@ -28,23 +26,52 @@ export async function POST(request: Request) {
 
     await page.setViewport({ width: 1080, height: 1024 });
 
-    const fullNames = await page.$$eval(
-      'td[class^="datas"] a[href^="javascript:bddThrowAthlete"]',
-      (anchors) =>
-        anchors.map((a) => (a.textContent ? a.textContent.trim() : ""))
-    );
+    const rawData = await page.evaluate(() => {
+      const rows = document.querySelectorAll("#ctnBilans tbody tr");
+      const resultRows = Array.from(rows).slice(2);
 
-    const results = fullNames.map((fullName) => ({
-      ...mockResult,
-      id: getId({ ...mockResult, fullName }),
-      fullName,
-    }));
+      const rawResults = resultRows.map((row) => {
+        const cells = row.querySelectorAll('td[class^="datas"]');
+
+        const fullName = cells[3]?.textContent?.trim();
+        const eventDate = cells[8]?.textContent?.trim();
+        const eventLocation = cells[10]?.textContent?.trim();
+
+        return {
+          rawScore: cells[1]?.textContent?.trim(),
+          fullName,
+          eventDate,
+          eventLocation,
+        };
+      });
+
+      return rawResults;
+    });
+
+    const results: Result[] = rawData.map((rawResult) => {
+      const fullName = rawResult.fullName ?? "";
+      const eventDate = rawResult.eventDate ?? "";
+      const eventLocation = rawResult.eventLocation ?? "";
+      const id = getId({ fullName, eventDate, eventLocation });
+
+      return {
+        id,
+        fullName,
+        eventDate,
+        eventLocation,
+        score: 100,
+        eventType: "Decathlon",
+      };
+    });
 
     await addResults(results);
 
     await browser.close();
 
-    return NextResponse.json({ results }, { status: 200 });
+    return NextResponse.json(
+      { length: results.length, results },
+      { status: 200 }
+    );
   } catch (error) {
     console.log("🚀 ~ GET ~ error:", error);
     return NextResponse.json({ error }, { status: 500 });
