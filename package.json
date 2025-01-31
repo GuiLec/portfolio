@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test-type": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "@use-gesture/react": "^10.3.1",
