@@ -1,3 +1,4 @@
+import { Result } from "@/modules/result/result.type";
 import { sql } from "@vercel/postgres";
 
 export const addResult = async ({
@@ -6,13 +7,7 @@ export const addResult = async ({
   distance,
   eventDate,
   eventLocation,
-}: {
-  id: string;
-  fullName: string;
-  distance: number;
-  eventDate: string;
-  eventLocation: string;
-}) => {
+}: Result) => {
   return await sql`
         INSERT INTO AthleResults 
         (id, fullName, distance, eventDate, eventLocation) 
