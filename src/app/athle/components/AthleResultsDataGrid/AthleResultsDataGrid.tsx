@@ -1,11 +1,26 @@
 "use client";
 import { Result } from "@/modules/result/result.type";
+import { formatTime } from "@/utils/formatTime";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 
 const columns: GridColDef[] = [
   { field: "fullname", headerName: "Full name", width: 250 },
-  { field: "eventdate", headerName: "Date", width: 130 },
+  { field: "eventtype", headerName: "Type", width: 150 },
+  {
+    field: "score",
+    headerName: "Score",
+    width: 130,
+    valueFormatter: (score) => {
+      return formatTime(score);
+    },
+  },
+  {
+    field: "eventdate",
+    headerName: "Date",
+    width: 130,
+  },
+  { field: "eventlocation", headerName: "Location", width: 130 },
 ];
 
 export const AthleResultsDataGrid = () => {
