@@ -1,36 +1,72 @@
-import * as React from "react";
-import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
-
-const rows: GridRowsProp = [
-  { id: 1, col1: "Hello", col2: "World" },
-  { id: 2, col1: "DataGridPro", col2: "is Awesome" },
-  { id: 3, col1: "MUI", col2: "is Amazing" },
-];
+"use client";
+import { Result } from "@/modules/result/result.type";
+import { formatTime } from "@/utils/formatTime";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
 
 const columns: GridColDef[] = [
-  { field: "fullname", headerName: "Full name", width: 150 },
-  { field: "eventdate", headerName: "Date", width: 150 },
+  { field: "fullname", headerName: "Full name", width: 250 },
+  { field: "eventtype", headerName: "Type", width: 150 },
+  {
+    field: "score",
+    headerName: "Score",
+    width: 130,
+    valueFormatter: (score) => {
+      return formatTime(score);
+    },
+  },
+  {
+    field: "eventdate",
+    headerName: "Date",
+    width: 130,
+  },
+  { field: "eventlocation", headerName: "Location", width: 130 },
 ];
 
-export const AthleResultsDataGrid = async () => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/athle/result/get-results`
-  );
-  console.log("🚀 ~ AthleResultsDataGrid ~ res:", res);
+export const AthleResultsDataGrid = () => {
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  });
+  const [rows, setRows] = useState<Result[]>([]);
+  const [rowCount, setRowCount] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  if (!res.ok) {
-    return (
-      <div>
-        Error fetching data.
-        <p>{`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/athle/result/get-results`}</p>
-        <p>{`${JSON.stringify(res)}`}</p>
-      </div>
+  const fetchData = async (page: number, pageSize: number) => {
+    setLoading(true);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/athle/result/get-results?page=${page}&page-size=${pageSize}`
     );
-  }
 
-  const data = await res.json();
+    if (!res.ok) {
+      return <div>Error fetching data.</div>;
+    }
 
-  const { results } = data;
+    const data = await res.json();
 
-  return <DataGrid rows={results} columns={columns} />;
+    const { results, count } = data;
+    setRows(results);
+    setRowCount(count);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData(paginationModel.page, paginationModel.pageSize);
+  }, [paginationModel]);
+
+  return (
+    <DataGrid
+      rows={rows}
+      columns={columns}
+      pagination
+      paginationMode="server"
+      paginationModel={paginationModel}
+      onPaginationModelChange={(newPaginationModel) => {
+        setPaginationModel(newPaginationModel);
+      }}
+      rowCount={rowCount}
+      loading={loading}
+      pageSizeOptions={[10, 25, 100]}
+    />
+  );
 };
