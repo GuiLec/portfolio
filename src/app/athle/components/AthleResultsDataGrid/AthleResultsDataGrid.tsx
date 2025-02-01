@@ -1,8 +1,14 @@
 "use client";
 import { GetResultsResponse } from "@/app/api/athle/result/get-results/interface";
+import { getSortParams } from "@/app/athle/components/AthleResultsDataGrid/utils/getSortParams";
 import { Result } from "@/modules/result/result.type";
 import { formatTime } from "@/utils/formatTime";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  getGridStringOperators,
+  GridColDef,
+  GridSortModel,
+} from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 
 const columns: GridColDef[] = [
@@ -11,6 +17,9 @@ const columns: GridColDef[] = [
   {
     field: "score",
     headerName: "Score",
+    // filterOperators: getGridStringOperators().filter(
+    //   (operator) => operator.value === "contains"
+    // ),
     width: 130,
     valueFormatter: (score) => {
       return formatTime(score);
@@ -25,6 +34,7 @@ const columns: GridColDef[] = [
 ];
 
 export const AthleResultsDataGrid = () => {
+  // extract the logic to a custom hook
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
@@ -32,11 +42,14 @@ export const AthleResultsDataGrid = () => {
   const [rows, setRows] = useState<Result[]>([]);
   const [rowCount, setRowCount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [sortModel, setSortModel] = useState<GridSortModel>([]);
+
+  const { sortField, sortOrder } = getSortParams(sortModel);
 
   const fetchData = async (page: number, pageSize: number) => {
     setLoading(true);
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/athle/result/get-results?page=${page}&page-size=${pageSize}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/athle/result/get-results?page=${page}&page-size=${pageSize}&sort-field=${sortField}&sort-order=${sortOrder}`
     );
 
     if (!res.ok) {
@@ -53,7 +66,7 @@ export const AthleResultsDataGrid = () => {
 
   useEffect(() => {
     fetchData(paginationModel.page, paginationModel.pageSize);
-  }, [paginationModel]);
+  }, [paginationModel, sortModel]);
 
   return (
     <DataGrid
@@ -61,9 +74,18 @@ export const AthleResultsDataGrid = () => {
       columns={columns}
       pagination
       paginationMode="server"
+      sortingMode="server"
+      // filterMode="server"
+      sortModel={sortModel}
       paginationModel={paginationModel}
       onPaginationModelChange={(newPaginationModel) => {
         setPaginationModel(newPaginationModel);
+      }}
+      onSortModelChange={(sortModel) => {
+        setSortModel(sortModel);
+      }}
+      onFilterModelChange={(filterModel) => {
+        console.log("🚀 ~ AthleResultsDataGrid ~ filterModel:", filterModel);
       }}
       rowCount={rowCount}
       loading={loading}
