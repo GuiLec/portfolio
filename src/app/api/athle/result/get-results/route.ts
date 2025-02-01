@@ -11,17 +11,23 @@ export async function GET(request: Request) {
   const pageSize = searchParams.get("page-size");
   const sortField = searchParams.get("sort-field");
   const sortOrder = searchParams.get("sort-order");
+  const filterField = searchParams.get("filter-field");
+  const filterValue = searchParams.get("filter-value");
 
   const safePage = Number(page) || 0;
   const safePageSize = Number(pageSize) || 10;
   const safeSortField = sortField ?? "eventdate";
   const safeSortOrder = sortOrder === "desc" ? "DESC" : "ASC";
+  const safeFilterQuery = filterField
+    ? `WHERE ${filterField} ILIKE '%${filterValue}%'`
+    : "";
 
   try {
     const count = await sql`SELECT COUNT(*) FROM AthleResults;`;
 
     const queryString = `
     SELECT * FROM AthleResults
+    ${safeFilterQuery}
     ORDER BY ${safeSortField} ${safeSortOrder}
     OFFSET ${safePage * safePageSize}
     LIMIT ${safePageSize};
