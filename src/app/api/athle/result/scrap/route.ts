@@ -54,7 +54,7 @@ export async function POST(request: Request) {
         fullName,
         rawEventDate: rawResult.eventDate ?? "",
         eventLocation,
-        score,
+        rawScore: rawResult.rawScore ?? "",
       });
       const eventDate = getEventDate(rawResult.eventDate);
 
@@ -86,13 +86,13 @@ const getId = ({
   fullName,
   rawEventDate,
   eventLocation,
-  score,
+  rawScore,
 }: {
   fullName: string;
   rawEventDate: string;
   eventLocation: string;
-  score: number;
-}) => `${rawEventDate}-${eventLocation}-${score}-${fullName}`.slice(0, 50);
+  rawScore: string;
+}) => `${rawEventDate}-${eventLocation}-${rawScore}-${fullName}`.slice(0, 50);
 
 const getEventType = (rawSearchDescription?: string | null) => {
   if (!rawSearchDescription) {
@@ -104,11 +104,9 @@ const getEventType = (rawSearchDescription?: string | null) => {
 };
 
 const getEventDate = (rawEventDate?: string | null): Date => {
-  console.log("🚀 ~ getEventDate ~ rawEventDate:", rawEventDate);
   if (!rawEventDate) {
     return new Date(0);
   }
   const date = moment.utc(rawEventDate, "DD/MM/YY").toDate();
-  console.log("🚀 ~ getEventDate ~ date:", date.toISOString());
   return date;
 };
