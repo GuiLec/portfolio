@@ -16,6 +16,17 @@ export const parseRawScore = (rawScore?: string | null): number => {
 
   rawScore = rawScore.replace(/\s*\(.*\)\s*$/, "");
 
+  // sometime data is corrupted and is 3504 instead of 35'04''
+  if (
+    ["h", "'", "''"].every((unit) => !rawScore?.includes(unit)) &&
+    rawScore.length === 4
+  ) {
+    minutes = parseUnit(rawScore.slice(0, 2));
+    seconds = parseUnit(rawScore.slice(2, 4));
+    return minutes * 100 * 60 + seconds * 100;
+  }
+  // ===
+
   const splitHundredths = rawScore.split("''");
   if (splitHundredths.length === 2) {
     hundredths = parseUnit(splitHundredths[1]);

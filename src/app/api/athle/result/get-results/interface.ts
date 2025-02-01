@@ -1,7 +1,14 @@
-import { Result } from "@/modules/result/result.type";
-
 export interface GetResultsResponse {
-  results: Result[];
+  results: RawResult[];
   count: number;
   length: number;
+}
+
+export interface RawResult {
+  id: string;
+  fullname: string;
+  score: string;
+  eventtype: string;
+  eventdate: string;
+  eventlocation: string;
 }

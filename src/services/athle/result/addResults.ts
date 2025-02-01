@@ -8,7 +8,7 @@ export const addResults = async (results: Result[]) => {
       fullName,
       eventType,
       score,
-      eventDate,
+      eventDate.toISOString(),
       eventLocation,
     ]
   );
