@@ -8,18 +8,24 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = searchParams.get("page");
   const pageSize = searchParams.get("page-size");
+  const sortField = searchParams.get("sort-field");
+  const sortOrder = searchParams.get("sort-order");
+
   const safePage = Number(page) || 0;
   const safePageSize = Number(pageSize) || 10;
+  const safeSortField = sortField ?? "eventdate";
+  const safeSortOrder = sortOrder === "desc" ? "DESC" : "ASC";
 
   try {
     const count = await sql`SELECT COUNT(*) FROM AthleResults;`;
 
-    const userTable = await sql`
-      SELECT * FROM AthleResults
-      ORDER BY id
-      OFFSET ${safePage * safePageSize}
-      LIMIT ${safePageSize};
-    `;
+    const queryString = `
+    SELECT * FROM AthleResults
+    ORDER BY ${safeSortField} ${safeSortOrder}
+    OFFSET ${safePage * safePageSize}
+    LIMIT ${safePageSize};
+  `;
+    const userTable = await sql.query(queryString);
 
     const results = userTable.rows;
     return NextResponse.json(
