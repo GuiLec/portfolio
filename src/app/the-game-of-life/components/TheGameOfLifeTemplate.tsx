@@ -1,5 +1,5 @@
 "use client";
-import LaunchDarklyProvider from "@/components/LaunchDarklyProvider/LaunchDarklyProvider";
+import LaunchDarklyProvider from "@/components/organisms/LaunchDarklyProvider/LaunchDarklyProvider";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import { useEffect, useState } from "react";
 
