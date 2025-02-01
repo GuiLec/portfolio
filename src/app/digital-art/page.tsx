@@ -1,5 +1,5 @@
 import React from "react";
-import FluidSwipeComponent from "@/components/FluidSwipeComponent/FluidSwipeComponent";
+import FluidSwipeComponent from "@/app/digital-art/components/FluidSwipeComponent/FluidSwipeComponent";
 
 export default function DigitalArtPage() {
   return (

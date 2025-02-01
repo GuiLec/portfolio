@@ -3,6 +3,11 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import Script from "next/script";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,6 +39,7 @@ export default function RootLayout({
             /* <!-- End Google Tag Manager --> */
           }
         </Script>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
       </head>
       <body className={inter.className}>
         <noscript>
@@ -45,6 +51,7 @@ export default function RootLayout({
             title="Google Tag Manager"
           ></iframe>
         </noscript>
+        <CssBaseline />
         <nav>
           <ul>
             <li>
@@ -55,6 +62,9 @@ export default function RootLayout({
             </li>
             <li>
               <Link href="/the-game-of-life">The Game of Life</Link>
+            </li>
+            <li>
+              <Link href="/athle">Athle</Link>
             </li>
           </ul>
         </nav>
