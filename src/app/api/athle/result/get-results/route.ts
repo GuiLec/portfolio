@@ -1,3 +1,4 @@
+import { Result } from "@/modules/result/result.type";
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
@@ -27,7 +28,8 @@ export async function GET(request: Request) {
   `;
     const userTable = await sql.query(queryString);
 
-    const results = userTable.rows;
+    const rawResults = userTable.rows;
+    const results = rawResults.map(adaptResult);
     return NextResponse.json(
       { length: results.length, results, count: count.rows[0].count },
       { status: 200 }
@@ -36,3 +38,21 @@ export async function GET(request: Request) {
     return NextResponse.json({ error }, { status: 500 });
   }
 }
+
+interface RawResult {
+  id: string;
+  fullname: string;
+  score: number;
+  eventtype: string;
+  eventdate: string;
+  eventlocation: string;
+}
+
+const adaptResult = (rawResult: RawResult): Result => ({
+  id: rawResult.id,
+  fullName: rawResult.fullname,
+  score: rawResult.score,
+  eventType: rawResult.eventtype,
+  eventDate: rawResult.eventdate,
+  eventLocation: rawResult.eventlocation,
+});

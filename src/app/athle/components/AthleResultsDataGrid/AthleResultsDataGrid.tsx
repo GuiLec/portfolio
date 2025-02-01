@@ -1,12 +1,13 @@
 "use client";
+import { GetResultsResponse } from "@/app/api/athle/result/get-results/interface";
 import { Result } from "@/modules/result/result.type";
 import { formatTime } from "@/utils/formatTime";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 
 const columns: GridColDef[] = [
-  { field: "fullname", headerName: "Full name", width: 250 },
-  { field: "eventtype", headerName: "Type", width: 150 },
+  { field: "fullName", headerName: "Full name", width: 250 },
+  { field: "eventType", headerName: "Type", width: 150 },
   {
     field: "score",
     headerName: "Score",
@@ -16,11 +17,11 @@ const columns: GridColDef[] = [
     },
   },
   {
-    field: "eventdate",
+    field: "eventDate",
     headerName: "Date",
     width: 130,
   },
-  { field: "eventlocation", headerName: "Location", width: 130 },
+  { field: "eventLocation", headerName: "Location", width: 130 },
 ];
 
 export const AthleResultsDataGrid = () => {
@@ -44,7 +45,7 @@ export const AthleResultsDataGrid = () => {
 
     const data = await res.json();
 
-    const { results, count } = data;
+    const { results, count } = data as GetResultsResponse;
     setRows(results);
     setRowCount(count);
     setLoading(false);
