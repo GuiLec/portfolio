@@ -2,6 +2,7 @@
 import { GetResultsResponse } from "@/app/api/athle/result/get-results/interface";
 import { getFilterParams } from "@/app/athle/components/AthleResultsDataGrid/utils/getFilterParams";
 import { getSortParams } from "@/app/athle/components/AthleResultsDataGrid/utils/getSortParams";
+import { adaptResult } from "@/modules/result/adaptResult";
 import { Result } from "@/modules/result/result.type";
 import { formatTime } from "@/utils/formatTime";
 import {
@@ -37,6 +38,7 @@ const columns: GridColDef[] = [
   {
     field: "eventDate",
     headerName: "Date",
+    type: "date",
     width: 130,
     filterable: false,
   },
@@ -72,7 +74,7 @@ export const AthleResultsDataGrid = () => {
     const data = await res.json();
 
     const { results, count } = data as GetResultsResponse;
-    setRows(results);
+    setRows(results.map(adaptResult));
     setRowCount(count);
     setLoading(false);
   };

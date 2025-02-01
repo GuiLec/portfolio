@@ -3,6 +3,6 @@ export interface Result {
   fullName: string;
   score: number;
   eventType: string;
-  eventDate: string;
+  eventDate: Date;
   eventLocation: string;
 }

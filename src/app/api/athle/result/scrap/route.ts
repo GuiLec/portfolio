@@ -1,6 +1,7 @@
 import { Result } from "@/modules/result/result.type";
 import { addResults } from "@/services/athle/result/addResults";
 import { parseRawScore } from "@/utils/parseRawScore";
+import moment from "moment";
 import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 
@@ -46,11 +47,16 @@ export async function POST(request: Request) {
 
     const results: Result[] = rawData.rawResults.map((rawResult) => {
       const fullName = rawResult.fullName ?? "";
-      const eventDate = rawResult.eventDate ?? "";
       const eventLocation = rawResult.eventLocation ?? "";
       const eventType = getEventType(rawData.rawSearchDescription);
       const score = parseRawScore(rawResult.rawScore);
-      const id = getId({ fullName, eventDate, eventLocation, score });
+      const id = getId({
+        fullName,
+        rawEventDate: rawResult.eventDate ?? "",
+        eventLocation,
+        score,
+      });
+      const eventDate = getEventDate(rawResult.eventDate);
 
       return {
         id,
@@ -71,21 +77,22 @@ export async function POST(request: Request) {
       { status: 200 }
     );
   } catch (error) {
+    console.log("🚀 ~ POST ~ error:", error);
     return NextResponse.json({ error }, { status: 500 });
   }
 }
 
 const getId = ({
   fullName,
-  eventDate,
+  rawEventDate,
   eventLocation,
   score,
 }: {
   fullName: string;
-  eventDate: string;
+  rawEventDate: string;
   eventLocation: string;
   score: number;
-}) => `${eventDate}-${eventLocation}-${score}-${fullName}`.slice(0, 50);
+}) => `${rawEventDate}-${eventLocation}-${score}-${fullName}`.slice(0, 50);
 
 const getEventType = (rawSearchDescription?: string | null) => {
   if (!rawSearchDescription) {
@@ -94,4 +101,14 @@ const getEventType = (rawSearchDescription?: string | null) => {
 
   const eventType = rawSearchDescription.split(" | ")[1];
   return eventType;
+};
+
+const getEventDate = (rawEventDate?: string | null): Date => {
+  console.log("🚀 ~ getEventDate ~ rawEventDate:", rawEventDate);
+  if (!rawEventDate) {
+    return new Date(0);
+  }
+  const date = moment.utc(rawEventDate, "DD/MM/YY").toDate();
+  console.log("🚀 ~ getEventDate ~ date:", date.toISOString());
+  return date;
 };
