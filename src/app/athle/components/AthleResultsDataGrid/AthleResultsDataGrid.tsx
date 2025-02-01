@@ -1,9 +1,9 @@
 import * as React from "react";
-import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 const columns: GridColDef[] = [
-  { field: "fullname", headerName: "Full name", width: 150 },
-  { field: "eventdate", headerName: "Date", width: 150 },
+  { field: "fullname", headerName: "Full name", width: 250 },
+  { field: "eventdate", headerName: "Date", width: 100 },
 ];
 
 export const AthleResultsDataGrid = async () => {
