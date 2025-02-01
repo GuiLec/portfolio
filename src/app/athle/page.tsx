@@ -5,7 +5,7 @@ import { AthleResultsDataGrid } from "@/app/athle/components/AthleResultsDataGri
 const AthlePage = () => {
   return (
     <main>
-      <div style={{ height: 300, width: "100%" }}>
+      <div style={{ height: 650, width: "100%" }}>
         <AthleResultsDataGrid />
       </div>
     </main>

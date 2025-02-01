@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = searchParams.get("page");
   const pageSize = searchParams.get("page-size");
-  const safePage = Number(page) || 1;
+  const safePage = Number(page) || 0;
   const safePageSize = Number(pageSize) || 10;
 
   try {
@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     const userTable = await sql`
       SELECT * FROM AthleResults
       ORDER BY id
-      OFFSET ${(safePage - 1) * safePageSize}
+      OFFSET ${safePage * safePageSize}
       LIMIT ${safePageSize};
     `;
 
