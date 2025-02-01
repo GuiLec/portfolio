@@ -19,7 +19,13 @@ export const AthleResultsDataGrid = async () => {
   console.log("🚀 ~ AthleResultsDataGrid ~ res:", res);
 
   if (!res.ok) {
-    return <div>Error fetching data.</div>;
+    return (
+      <div>
+        Error fetching data.
+        <p>{`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/athle/result/get-results`}</p>
+        <p>{`${JSON.stringify(res)}`}</p>
+      </div>
+    );
   }
 
   const data = await res.json();
