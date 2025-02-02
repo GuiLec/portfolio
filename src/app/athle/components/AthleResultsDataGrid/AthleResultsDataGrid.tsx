@@ -49,7 +49,7 @@ const columns: GridColDef[] = [
   },
   {
     field: "athleteYear",
-    headerName: "Year",
+    headerName: "Birth",
     width: 100,
   },
   {
