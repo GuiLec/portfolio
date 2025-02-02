@@ -1,3 +1,4 @@
+import { getAthleteYear } from "@/app/api/athle/result/scrap/utils/getAthleteYear";
 import { Result } from "@/modules/result/result.type";
 import { addResults } from "@/services/athle/result/addResults";
 import { parseRawScore } from "@/utils/parseRawScore";
@@ -62,7 +63,7 @@ export async function POST(request: Request) {
         const club = rawResult.club ?? "";
         const clubRegion = rawResult.clubRegion ?? "";
         const clubDepartement = rawResult.clubDepartement ?? "";
-        const athleteYear = Number(rawResult.athleteYear);
+        const athleteYear = getAthleteYear(rawResult.athleteYear);
         const resultAgeCategory = rawResult.resultAgeCategory ?? "";
         const eventLocation = rawResult.eventLocation ?? "";
         const eventType = getEventType(rawData.rawSearchDescription);
