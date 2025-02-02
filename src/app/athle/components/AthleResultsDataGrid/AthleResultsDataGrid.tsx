@@ -42,6 +42,31 @@ const columns: GridColDef[] = [
     filterable: false,
   },
   { field: "eventLocation", headerName: "Location", width: 130 },
+  {
+    field: "resultAgeCategory",
+    headerName: "Category",
+    width: 100,
+  },
+  {
+    field: "athleteYear",
+    headerName: "Birth",
+    width: 100,
+  },
+  {
+    field: "club",
+    headerName: "Club",
+    width: 130,
+  },
+  {
+    field: "clubRegion",
+    headerName: "Region",
+    width: 130,
+  },
+  {
+    field: "clubDepartement",
+    headerName: "Department",
+    width: 130,
+  },
 ];
 
 export const AthleResultsDataGrid = () => {
