@@ -32,6 +32,11 @@ export async function POST(request: Request) {
           const cells = row.querySelectorAll('td[class^="datas"]');
 
           const fullName = cells[3]?.textContent?.trim();
+          const club = cells[4]?.textContent?.trim();
+          const clubRegion = cells[5]?.textContent?.trim();
+          const clubDepartement = cells[6]?.textContent?.trim();
+          const resultAgeCategory = cells[7]?.textContent?.trim();
+          const athleteYear = cells[8]?.textContent?.trim();
           const eventDate = cells[9]?.textContent?.trim();
           const eventLocation = cells[10]?.textContent?.trim();
           const rawScore = cells[1]?.querySelector("b")?.textContent?.trim();
@@ -39,6 +44,11 @@ export async function POST(request: Request) {
           return {
             rawScore,
             fullName,
+            club,
+            clubRegion,
+            clubDepartement,
+            resultAgeCategory,
+            athleteYear,
             eventDate,
             eventLocation,
           };
@@ -49,6 +59,11 @@ export async function POST(request: Request) {
 
       const pageResults: Result[] = rawData.rawResults.map((rawResult) => {
         const fullName = rawResult.fullName ?? "";
+        const club = rawResult.club ?? "";
+        const clubRegion = rawResult.clubRegion ?? "";
+        const clubDepartement = rawResult.clubDepartement ?? "";
+        const athleteYear = Number(rawResult.athleteYear);
+        const resultAgeCategory = rawResult.resultAgeCategory ?? "";
         const eventLocation = rawResult.eventLocation ?? "";
         const eventType = getEventType(rawData.rawSearchDescription);
         const score = parseRawScore(rawResult.rawScore);
@@ -63,6 +78,11 @@ export async function POST(request: Request) {
         return {
           id,
           fullName,
+          club,
+          clubRegion,
+          clubDepartement,
+          athleteYear,
+          resultAgeCategory,
           eventDate,
           eventLocation,
           score,

@@ -1,6 +1,11 @@
 export interface Result {
   id: string;
   fullName: string;
+  club: string;
+  clubRegion: string;
+  clubDepartement: string;
+  athleteYear: number;
+  resultAgeCategory: string;
   score: number;
   eventType: string;
   eventDate: Date;
@@ -15,9 +20,14 @@ export interface GetResultsResponse {
 
 export interface RawResult {
   id: string;
-  fullname: string;
-  score: string;
-  eventtype: string;
-  eventdate: string;
-  eventlocation: string;
+  fullname: string | null;
+  club: string | null;
+  clubregion: string | null;
+  clubdepartement: string | null;
+  athleteyear: string | null;
+  resultagecategory: string | null;
+  score: string | null;
+  eventtype: string | null;
+  eventdate: string | null;
+  eventlocation: string | null;
 }
