@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test-type": "tsc --noEmit --emitDeclarationOnly false"
+    "test-type": "tsc --noEmit --emitDeclarationOnly false",
+    "test-unit": "jest",
+    "test": "pnpm run test-type && pnpm run test-unit"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

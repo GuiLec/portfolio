@@ -1,4 +1,4 @@
-import { parseRawScore } from "@/utils/parseRawScore";
+import { parseRawScore } from "@/modules/scrapping/utils/parseRawScore";
 
 describe("parseRawScore", () => {
   it.each`

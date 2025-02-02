@@ -23,7 +23,9 @@ export async function GET(request: Request) {
     : "";
 
   try {
-    const count = await sql`SELECT COUNT(*) FROM AthleResults;`;
+    const count = await sql.query(
+      `SELECT COUNT(*) FROM AthleResults ${safeFilterQuery};`
+    );
 
     const queryString = `
     SELECT * FROM AthleResults
@@ -40,6 +42,7 @@ export async function GET(request: Request) {
       { status: 200 }
     );
   } catch (error) {
+    console.log("🚀 ~ GET ~ error:", error);
     return NextResponse.json({ error }, { status: 500 });
   }
 }

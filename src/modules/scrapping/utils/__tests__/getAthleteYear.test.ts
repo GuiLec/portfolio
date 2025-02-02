@@ -1,4 +1,4 @@
-import { getAthleteYear } from "@/app/api/athle/result/scrap/utils/getAthleteYear";
+import { getAthleteYear } from "@/modules/scrapping/utils/getAthleteYear";
 
 // Should mock date, but flemme
 describe("getAthleteYear", () => {
