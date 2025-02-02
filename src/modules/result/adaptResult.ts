@@ -1,5 +1,4 @@
-import { RawResult } from "@/app/api/athle/result/get-results/interface";
-import { Result } from "@/modules/result/result.type";
+import { RawResult, Result } from "@/modules/result/result.type";
 
 export const adaptResult = (rawResult: RawResult): Result => ({
   id: rawResult.id,
