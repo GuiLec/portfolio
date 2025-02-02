@@ -3,6 +3,7 @@ import { getFilterParams } from "@/app/athle/components/AthleResultsDataGrid/uti
 import { getSortParams } from "@/app/athle/components/AthleResultsDataGrid/utils/getSortParams";
 import { adaptResult } from "@/modules/result/adaptResult";
 import { GetResultsResponse, Result } from "@/modules/result/result.type";
+import { formatBirthDate } from "@/utils/formatBirthDate";
 import { formatTime } from "@/utils/formatTime";
 import {
   DataGrid,
@@ -42,6 +43,34 @@ const columns: GridColDef[] = [
     filterable: false,
   },
   { field: "eventLocation", headerName: "Location", width: 130 },
+  {
+    field: "resultAgeCategory",
+    headerName: "Category",
+    width: 100,
+  },
+  {
+    field: "athleteYear",
+    headerName: "Year",
+    width: 100,
+    valueFormatter: (year) => {
+      formatBirthDate(year);
+    },
+  },
+  {
+    field: "club",
+    headerName: "Club",
+    width: 130,
+  },
+  {
+    field: "clubRegion",
+    headerName: "Region",
+    width: 130,
+  },
+  {
+    field: "clubDepartement",
+    headerName: "Department",
+    width: 130,
+  },
 ];
 
 export const AthleResultsDataGrid = () => {
