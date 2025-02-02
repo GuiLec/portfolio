@@ -3,7 +3,7 @@ import { getAthleteYear } from "@/modules/scrapping/utils/getAthleteYear";
 import { getEventDate } from "@/modules/scrapping/utils/getEventDate";
 import { getEventType } from "@/modules/scrapping/utils/getEventType";
 import { getId } from "@/modules/scrapping/utils/getId";
-import { parseRawScore } from "@/utils/parseRawScore";
+import { parseRawScore } from "@/modules/scrapping/utils/parseRawScore";
 
 export const adaptRawScrapResult = ({
   rawScrapResult,
