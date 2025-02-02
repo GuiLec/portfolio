@@ -3,7 +3,6 @@ import { getFilterParams } from "@/app/athle/components/AthleResultsDataGrid/uti
 import { getSortParams } from "@/app/athle/components/AthleResultsDataGrid/utils/getSortParams";
 import { adaptResult } from "@/modules/result/adaptResult";
 import { GetResultsResponse, Result } from "@/modules/result/result.type";
-import { formatBirthDate } from "@/utils/formatBirthDate";
 import { formatTime } from "@/utils/formatTime";
 import {
   DataGrid,
@@ -52,9 +51,6 @@ const columns: GridColDef[] = [
     field: "athleteYear",
     headerName: "Year",
     width: 100,
-    valueFormatter: (year) => {
-      formatBirthDate(year);
-    },
   },
   {
     field: "club",
