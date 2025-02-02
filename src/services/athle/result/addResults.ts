@@ -2,7 +2,11 @@ import { Result } from "@/modules/result/result.type";
 import { sql } from "@vercel/postgres";
 
 export const addResults = async (results: Result[]) => {
-  const values = results.flatMap(
+  const uniqueResults = Array.from(
+    new Map(results.map((result) => [result.id, result])).values()
+  );
+
+  const values = uniqueResults.flatMap(
     ({
       id,
       fullName,
@@ -31,7 +35,7 @@ export const addResults = async (results: Result[]) => {
   );
 
   const numFields = 11;
-  const placeholders = results
+  const placeholders = uniqueResults
     .map((_, index) => {
       return `(${Array.from(
         { length: numFields },
