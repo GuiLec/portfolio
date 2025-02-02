@@ -15,18 +15,40 @@ export async function POST(request: Request) {
 
   try {
     for (const targetUrl of targetUrls) {
-      // remove the frmposition position query param from the url if it exists
-      const url = new URL(targetUrl);
-      url.searchParams.delete("frmposition");
+      const baseUrl = new URL(targetUrl);
+      baseUrl.searchParams.delete("frmposition");
 
-      await page.goto(targetUrl);
+      await page.goto(baseUrl.toString());
+
+      const { totalNumberOfPages: numberOfPages } = await page.evaluate(() => {
+        const barSelect = document.querySelector(".barContainer .barSelect ");
+        const barSelectText = barSelect?.textContent;
+        const match = barSelectText?.match(/\/(\d+)/);
+        const totalNumberOfPages = match ? parseInt(match[1], 10) : 1;
+
+        return { totalNumberOfPages };
+      });
 
       const pageResults = await extractPageResults(page);
-
       results.push(...pageResults);
+
+      for (let i = 1; i <= numberOfPages - 1; i++) {
+        console.log("🚀 ~ POST ~ i:", i);
+        await page.goto(`${baseUrl.toString()}&frmposition=${i}`);
+        // Optional: Add debug screenshot
+        // await page.screenshot({ path: `page-${i}.png` });
+        const newPageResults = await extractPageResults(page);
+        results.push(...newPageResults);
+      }
     }
 
-    await addResults(results);
+    // batch results by 2000
+    const chunkSize = 2000;
+    for (let i = 0; i < results.length; i += chunkSize) {
+      console.log("🚀 ~ POST ~ chunk:", i);
+      const chunk = results.slice(i, i + chunkSize);
+      await addResults(chunk);
+    }
     await browser.close();
 
     return NextResponse.json(
