@@ -1,4 +1,4 @@
-import { TheGameOfLifeTemplate } from "@/app/the-game-of-life/components/TheGameOfLifeTemplate";
+import { TheGameOfLifeTemplate } from "@/app/perso/the-game-of-life/components/TheGameOfLifeTemplate";
 
 const SQUARE_SIZE = 20;
 const GRID_SIZE = 100;
@@ -24,7 +24,7 @@ const TheGameOfLifePage = () => {
       </p>
       <br />
       <p>
-        <a href="/the-game-of-life/models/gosper-glider-gun">
+        <a href="perso/the-game-of-life/models/gosper-glider-gun">
           Gosper glider gun
         </a>
       </p>
