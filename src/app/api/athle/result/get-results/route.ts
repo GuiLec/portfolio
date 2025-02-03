@@ -1,4 +1,3 @@
-import { Result } from "@/modules/result/result.type";
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
@@ -37,6 +36,7 @@ export async function GET(request: Request) {
     const userTable = await sql.query(queryString);
 
     const results = userTable.rows;
+    console.log("🚀 ~ GET ~ results:", results);
     return NextResponse.json(
       { length: results.length, results, count: count.rows[0].count },
       { status: 200 }

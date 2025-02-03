@@ -10,6 +10,7 @@ export interface Result {
   eventType: string;
   eventDate: Date;
   eventLocation: string;
+  iaafScore: number;
 }
 
 export interface GetResultsResponse {
@@ -30,4 +31,5 @@ export interface RawResult {
   eventtype: string | null;
   eventdate: string | null;
   eventlocation: string | null;
+  iaafscore: string | null;
 }

@@ -67,6 +67,13 @@ const columns: GridColDef[] = [
     headerName: "Department",
     width: 130,
   },
+  {
+    field: "iaafScore",
+    headerName: "IAAF",
+    filterable: false,
+    type: "number",
+    width: 130,
+  },
 ];
 
 export const AthleResultsDataGrid = () => {

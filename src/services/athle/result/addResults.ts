@@ -19,6 +19,7 @@ export const addResults = async (results: Result[]) => {
       eventDate,
       eventLocation,
       score,
+      iaafScore,
     }) => [
       id,
       fullName,
@@ -31,10 +32,11 @@ export const addResults = async (results: Result[]) => {
       score,
       eventDate.toISOString(),
       eventLocation,
+      iaafScore,
     ]
   );
 
-  const numFields = 11;
+  const numFields = 12;
   const placeholders = uniqueResults
     .map((_, index) => {
       return `(${Array.from(
@@ -46,7 +48,7 @@ export const addResults = async (results: Result[]) => {
 
   return await sql.query(
     `INSERT INTO AthleResults 
-     (id, fullName, club, clubRegion, clubDepartement, athleteYear, resultAgeCategory, eventType, score, eventDate, eventLocation)
+     (id, fullName, club, clubRegion, clubDepartement, athleteYear, resultAgeCategory, eventType, score, eventDate, eventLocation, iaafScore)
      VALUES ${placeholders}
      ON CONFLICT (id) DO UPDATE SET
        score = EXCLUDED.score,
@@ -57,7 +59,9 @@ export const addResults = async (results: Result[]) => {
        resultAgeCategory = EXCLUDED.resultAgeCategory,
        eventType = EXCLUDED.eventType,
        eventDate = EXCLUDED.eventDate,
-       eventLocation = EXCLUDED.eventLocation`,
+       eventLocation = EXCLUDED.eventLocation,
+       iaafScore = EXCLUDED.iaafScore
+       `,
     values
   );
 };

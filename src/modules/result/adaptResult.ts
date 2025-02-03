@@ -13,5 +13,6 @@ export const adaptResult = (rawResult: RawResult): Result => {
     eventType: rawResult.eventtype ?? "",
     eventDate: new Date(rawResult.eventdate ?? 0),
     eventLocation: rawResult.eventlocation ?? "",
+    iaafScore: Number(rawResult.iaafscore),
   };
 };

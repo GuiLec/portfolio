@@ -4,6 +4,8 @@ import { getEventDate } from "@/modules/scrapping/utils/getEventDate";
 import { getEventType } from "@/modules/scrapping/utils/getEventType";
 import { getId } from "@/modules/scrapping/utils/getId";
 import { parseRawScore } from "@/modules/scrapping/utils/parseRawScore";
+import { calculateIAAFScore } from "@/utils/calculateIAAFScore";
+import { getGenderFromAgeCategory } from "@/utils/getGenderFromAgeCategory";
 
 export const adaptRawScrapResult = ({
   rawScrapResult,
@@ -28,6 +30,11 @@ export const adaptRawScrapResult = ({
     rawScore: rawScrapResult.rawScore ?? "",
   });
   const eventDate = getEventDate(rawScrapResult.eventDate);
+  const iaafScore = calculateIAAFScore({
+    performance: score / 100,
+    eventType,
+    gender: getGenderFromAgeCategory(resultAgeCategory),
+  });
 
   return {
     id,
@@ -41,5 +48,6 @@ export const adaptRawScrapResult = ({
     eventLocation,
     score,
     eventType,
+    iaafScore,
   };
 };
