@@ -16,14 +16,27 @@ export default function LayoutPerso({
       <nav>
         <ul>
           <li>
-            <Link href="/perso/digital-art">Digital art</Link>
+            <strong>Perso</strong>
+            <ul>
+              <li>
+                <Link href="/perso">Perso</Link>
+              </li>
+              <li>
+                <Link href="/perso/digital-art">Digital art</Link>
+              </li>
+              <li>
+                <Link href="/perso/the-game-of-life">The Game of Life</Link>
+              </li>
+            </ul>
           </li>
+          <li></li>
           <li>
-            <Link href="/perso/the-game-of-life">The Game of Life</Link>
+            <strong>Public</strong>
+            <ul>
+              <Link href="/athle">Athle</Link>
+            </ul>
           </li>
-          <li>
-            <Link href="/athle">Athle</Link>
-          </li>
+          <li></li>
         </ul>
       </nav>
       {children}
