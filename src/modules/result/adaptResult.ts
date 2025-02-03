@@ -1,7 +1,6 @@
 import { RawResult, Result } from "@/modules/result/result.type";
 
 export const adaptResult = (rawResult: RawResult): Result => {
-  console.log("🚀 ~ adaptResult ~ rawResult:", rawResult);
   return {
     id: rawResult.id ?? "",
     fullName: rawResult.fullname ?? "",
