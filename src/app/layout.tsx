@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
+
 import Script from "next/script";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -10,11 +10,6 @@ import "@fontsource/roboto/700.css";
 import CssBaseline from "@mui/material/CssBaseline";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "GuiLec's Portfolio",
-  description: "I drop here the things I do.",
-};
 
 export default function RootLayout({
   children,
@@ -52,22 +47,6 @@ export default function RootLayout({
           ></iframe>
         </noscript>
         <CssBaseline />
-        <nav>
-          <ul>
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/digital-art">Digital art</Link>
-            </li>
-            <li>
-              <Link href="/the-game-of-life">The Game of Life</Link>
-            </li>
-            <li>
-              <Link href="/athle">Athle</Link>
-            </li>
-          </ul>
-        </nav>
         {children}
       </body>
     </html>

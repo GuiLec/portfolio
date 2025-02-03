@@ -1,4 +1,4 @@
-import { TheGameOfLifeTemplate } from "@/app/the-game-of-life/components/TheGameOfLifeTemplate";
+import { TheGameOfLifeTemplate } from "@/app/perso/the-game-of-life/components/TheGameOfLifeTemplate";
 
 const SQUARE_SIZE = 20;
 const GRID_SIZE = 100;
