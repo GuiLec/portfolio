@@ -16,6 +16,8 @@ export const parseRawScore = (rawScore?: string | null): number => {
 
   rawScore = rawScore.replace(/\s*\(.*\)\s*$/, "");
 
+  //====== SPECIAL CASES START ======//
+
   // sometime data is corrupted and is 3504 instead of 35'04''
   if (
     ["h", "'", "''"].every((unit) => !rawScore?.includes(unit)) &&
@@ -25,7 +27,25 @@ export const parseRawScore = (rawScore?: string | null): number => {
     seconds = parseUnit(rawScore.slice(2, 4));
     return minutes * 100 * 60 + seconds * 100;
   }
-  // ===
+
+  // sometimes the '' is missing, we should add them: for example: 	3h27'45 => 3h27'45'' or 27'45 => 27'45''
+  if (rawScore.match(/h\d{1,2}'\d{1,2}$/)) {
+    rawScore = rawScore.replace(/h(\d{1,2}'\d{1,2})$/, "h$1''");
+  } else if (rawScore.match(/\d{1,2}'\d{1,2}$/)) {
+    rawScore = rawScore.replace(/(\d{1,2}'\d{1,2})$/, "$1''");
+  }
+
+  // sometimes the ':' is used instead of h and ' for hours and minutes
+  if (rawScore.match(/\d{1,2}:\d{1,2}:\d{1,2}/)) {
+    rawScore = rawScore.replace(/(\d{1,2}):(\d{1,2}):(\d{1,2})/, "$1h$2'$3''");
+  }
+
+  // sometimes the ':' is used instead of ' for minutes
+  if (rawScore.match(/\d{1,2}:\d{1,2}/)) {
+    rawScore = rawScore.replace(/(\d{1,2}):(\d{1,2})/, "$1'$2''");
+  }
+
+  //====== SPECIAL CASES END ======//
 
   const splitHundredths = rawScore.split("''");
   if (splitHundredths.length === 2) {
