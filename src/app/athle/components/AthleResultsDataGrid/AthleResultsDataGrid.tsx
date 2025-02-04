@@ -18,7 +18,8 @@ interface AthleResultsDataGridProps {
 }
 
 export const AthleResultsDataGrid = ({ config }: AthleResultsDataGridProps) => {
-  const { preFitlters, dataGridColumns, preSort } = config;
+  const { preFitlters, dataGridColumns, preSort, hideFooter, defaultPageSize } =
+    config;
 
   const columns = getGridColumns(dataGridColumns);
 
@@ -27,7 +28,7 @@ export const AthleResultsDataGrid = ({ config }: AthleResultsDataGridProps) => {
   const [loading, setLoading] = useState(false);
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     page: 0,
-    pageSize: 100,
+    pageSize: defaultPageSize,
   });
   const [sortModel, setSortModel] = useState<GridSortModel>([]);
   const [filterModel, setFilterModel] = useState<GridFilterModel>({
@@ -78,6 +79,7 @@ export const AthleResultsDataGrid = ({ config }: AthleResultsDataGridProps) => {
       rowCount={rowCount}
       loading={loading}
       pageSizeOptions={[10, 25, 100]}
+      hideFooter={hideFooter}
     />
   );
 };

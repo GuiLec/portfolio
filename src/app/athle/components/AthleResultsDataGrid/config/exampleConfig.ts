@@ -36,4 +36,5 @@ export const exampleConfig: AthleResultsDataGridConfig = {
     },
   ],
   preSort: { field: "iaafScore", order: "desc" },
+  defaultPageSize: 10,
 };

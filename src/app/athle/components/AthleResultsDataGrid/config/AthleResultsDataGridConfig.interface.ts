@@ -4,6 +4,8 @@ export interface AthleResultsDataGridConfig {
   preFitlters: DataGridFilter[];
   dataGridColumns: DataGridColumn[];
   preSort: { field: DataGridField; order: "asc" | "desc" };
+  hideFooter?: boolean;
+  defaultPageSize: number;
 }
 
 export interface DataGridFilter {

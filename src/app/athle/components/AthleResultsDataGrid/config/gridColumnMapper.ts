@@ -11,7 +11,7 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
   fullName: {
     field: "fullName",
     headerName: "Athlète",
-    width: 250,
+    width: 200,
     filterOperators: getGridStringOperators().filter(
       (operator) => operator.value === "contains"
     ),
@@ -26,7 +26,7 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
     headerName: "Performance",
     filterable: false,
     type: "number",
-    width: 130,
+    width: 110,
     valueFormatter: (score) => {
       return formatTime(score);
     },
@@ -73,7 +73,7 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
     headerName: "IAAF",
     filterable: false,
     type: "number",
-    width: 130,
+    width: 100,
   },
   gender: {
     field: "gender",
