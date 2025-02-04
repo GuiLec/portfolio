@@ -10,29 +10,14 @@ import {
   Container,
   Typography,
 } from "@mui/material";
+import { AthleEvent } from "@/modules/event/interface";
+import { eventMapper } from "@/modules/event/eventMapper";
 
-const cards = [
-  {
-    id: 1,
-    title: "5 Km route",
-    href: "/athle/event/5km",
-  },
-  {
-    id: 2,
-    title: "10 Km route",
-    href: "/athle/event/10km",
-  },
-  {
-    id: 3,
-    title: "Semi marathon",
-    href: "/athle/event/half",
-  },
-  {
-    id: 4,
-    title: "Marathon",
-    href: "/athle/event/marathon",
-  },
-];
+const cards = Object.values(AthleEvent).map((event) => ({
+  id: event,
+  title: eventMapper[event].label,
+  href: `/athle/event/${event}`,
+}));
 
 const AthlePage = () => {
   const currentYear = new Date().getFullYear();
