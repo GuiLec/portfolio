@@ -31,5 +31,9 @@ export const exampleConfig: AthleResultsDataGridConfig = {
     {
       field: "eventDate",
     },
+    {
+      field: "iaafScore",
+    },
   ],
+  preSort: { field: "iaafScore", order: "desc" },
 };

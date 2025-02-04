@@ -18,7 +18,7 @@ interface AthleResultsDataGridProps {
 }
 
 export const AthleResultsDataGrid = ({ config }: AthleResultsDataGridProps) => {
-  const { preFitlters, dataGridColumns } = config;
+  const { preFitlters, dataGridColumns, preSort } = config;
 
   const columns = getGridColumns(dataGridColumns);
 
@@ -34,7 +34,7 @@ export const AthleResultsDataGrid = ({ config }: AthleResultsDataGridProps) => {
     items: [],
   });
 
-  const { sortField, sortOrder } = getSortParams(sortModel);
+  const { sortField, sortOrder } = getSortParams({ sortModel, preSort });
   const { filterFields, filterValues } = getFilterParams({
     filterModel,
     preFitlters,

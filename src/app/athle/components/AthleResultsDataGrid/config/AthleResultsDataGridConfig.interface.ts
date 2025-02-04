@@ -3,6 +3,7 @@ import { Result } from "@/modules/result/result.type";
 export interface AthleResultsDataGridConfig {
   preFitlters: DataGridFilter[];
   dataGridColumns: DataGridColumn[];
+  preSort: { field: DataGridField; order: "asc" | "desc" };
 }
 
 export interface DataGridFilter {
