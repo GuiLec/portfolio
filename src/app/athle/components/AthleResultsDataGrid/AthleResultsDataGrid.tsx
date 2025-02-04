@@ -36,12 +36,17 @@ export const AthleResultsDataGrid = ({
     page: 0,
     pageSize: defaultPageSize,
   });
-  const [sortModel, setSortModel] = useState<GridSortModel>([]);
+  const [sortModel, setSortModel] = useState<GridSortModel>([
+    {
+      field: preSort.field,
+      sort: preSort.order,
+    },
+  ]);
   const [filterModel, setFilterModel] = useState<GridFilterModel>({
     items: [],
   });
 
-  const { sortField, sortOrder } = getSortParams({ sortModel, preSort });
+  const { sortField, sortOrder } = getSortParams(sortModel);
   const { filterFields, filterValues } = getFilterParams({
     filterModel,
     preFitlters,

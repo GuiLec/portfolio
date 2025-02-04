@@ -1,4 +1,5 @@
 import { AthleResultsDataGridConfig } from "@/app/athle/components/AthleResultsDataGrid/config/AthleResultsDataGridConfig.interface";
+import { eventMapper } from "@/modules/event/eventMapper";
 import { AthleEvent } from "@/modules/event/interface";
 
 export const getAthleEventPageConfig = ({
@@ -6,7 +7,12 @@ export const getAthleEventPageConfig = ({
 }: {
   athleEvent: AthleEvent;
 }): AthleResultsDataGridConfig => ({
-  preFitlters: [],
+  preFitlters: [
+    {
+      field: "eventType",
+      value: eventMapper[athleEvent].eventType,
+    },
+  ],
   dataGridColumns: [
     {
       field: "fullName",
@@ -19,6 +25,18 @@ export const getAthleEventPageConfig = ({
     },
     {
       field: "eventDate",
+    },
+    {
+      field: "club",
+    },
+    {
+      field: "resultAgeCategory",
+    },
+    {
+      field: "clubRegion",
+    },
+    {
+      field: "clubDepartement",
     },
     {
       field: "iaafScore",

@@ -1,17 +1,10 @@
 import { GridSortModel } from "@mui/x-data-grid";
 
-export const getSortParams = ({
-  sortModel,
-  preSort,
-}: {
-  sortModel: GridSortModel;
-  preSort: {
-    field: string;
-    order: "asc" | "desc";
-  };
-}): { sortField: string; sortOrder: "asc" | "desc" } => {
+export const getSortParams = (
+  sortModel: GridSortModel
+): { sortField: string; sortOrder: "asc" | "desc" } => {
   if (sortModel.length === 0) {
-    return { sortField: preSort.field, sortOrder: preSort.order };
+    return { sortField: "eventdate", sortOrder: "asc" };
   }
 
   const sortItem = sortModel[0];

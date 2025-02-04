@@ -4,3 +4,9 @@ export enum AthleEvent {
   "half" = "half",
   "marathon" = "marathon",
 }
+
+export type EventType =
+  | "5 Km route"
+  | "10 Km route"
+  | "1/2 Marathon"
+  | "Marathon";
