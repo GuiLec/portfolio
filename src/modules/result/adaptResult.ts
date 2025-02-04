@@ -14,5 +14,7 @@ export const adaptResult = (rawResult: RawResult): Result => {
     eventDate: new Date(rawResult.eventdate ?? 0),
     eventLocation: rawResult.eventlocation ?? "",
     iaafScore: Number(rawResult.iaafscore),
+    gender: rawResult.gender === "F" ? "F" : "M",
+    nationality: rawResult.nationality ?? "",
   };
 };
