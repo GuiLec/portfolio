@@ -19,6 +19,7 @@ describe("calculateIAAFScore", () => {
     ${60 * 60 + 6 * 60 + 10}      | ${"1/2 Marathon"} | ${"female"} | ${1211}
     ${2 * 60 * 60 + 48 * 60 + 43} | ${"Marathon"}     | ${"female"} | ${952}
     ${2 * 60 * 60 + 20 * 60 + 17} | ${"Marathon"}     | ${"female"} | ${1212}
+    ${37 * 60 + 30}               | ${"5 Km Route"}   | ${"male"}   | ${0}
   `(
     "should return $expected when performance is $performance, eventType is $eventType, gender is $gender",
     ({ performance, eventType, gender, expected }) => {

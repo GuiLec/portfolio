@@ -55,6 +55,9 @@ export const calculateIAAFScore = ({
 }): number => {
   const event = getEvent(eventType);
   const { A, B } = getConstants(event, gender);
+  if (performance > B) {
+    return 0;
+  }
   const score = A * Math.pow(B - performance, 2);
   return Math.round(score);
 };
