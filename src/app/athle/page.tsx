@@ -17,7 +17,7 @@ const AthlePage = () => {
             justifyContent: "center",
           }}
         >
-          <Box sx={{ maxWidth: 850, width: "100%" }}>
+          <Box sx={{ maxWidth: 850, width: "100%", height: 630 }}>
             <AthleResultsDataGrid config={topIaafScoresConfig} />
           </Box>
         </Box>
