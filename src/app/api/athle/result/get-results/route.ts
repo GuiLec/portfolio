@@ -12,20 +12,29 @@ export async function GET(request: Request) {
   const sortOrder = searchParams.get("sort-order");
   const filterFields = searchParams.get("filter-fields");
   const filterValues = searchParams.get("filter-values");
+  const eventFromDate = searchParams.get("event-from-date");
+  const eventToDate = searchParams.get("event-to-date");
 
-  let safeFilterQuery = "";
+  const safeEventFromDate = eventFromDate || new Date(0).toISOString();
+  const safeEventToDate = eventToDate || new Date().toISOString();
+
+  const filters = [];
   if (filterFields && filterValues) {
     const fields = filterFields.split(",");
     const values = filterValues.split(",");
-    safeFilterQuery = `WHERE ${fields
-      .map(
-        (field, index) =>
-          `${decodeURIComponent(field)} ILIKE '%${decodeURIComponent(
-            values[index]
-          )}%'`
-      )
-      .join(" AND ")}`;
+    const fieldFilters = fields.map(
+      (field, index) =>
+        `${decodeURIComponent(field)} ILIKE '%${decodeURIComponent(
+          values[index]
+        )}%'`
+    );
+    filters.push(...fieldFilters);
   }
+  filters.push(
+    `eventDate >= '${decodeURIComponent(safeEventFromDate)}'`,
+    `eventDate <= '${decodeURIComponent(safeEventToDate)}'`
+  );
+  const safeFilterQuery = `WHERE ${filters.join(" AND ")}`;
 
   const safePage = Number(page) || 0;
   const safePageSize = Number(pageSize) || 10;

@@ -15,9 +15,15 @@ import { useEffect, useState } from "react";
 
 interface AthleResultsDataGridProps {
   config: AthleResultsDataGridConfig;
+  eventFromDate?: string;
+  eventToDate?: string;
 }
 
-export const AthleResultsDataGrid = ({ config }: AthleResultsDataGridProps) => {
+export const AthleResultsDataGrid = ({
+  config,
+  eventFromDate,
+  eventToDate,
+}: AthleResultsDataGridProps) => {
   const { preFitlters, dataGridColumns, preSort, hideFooter, defaultPageSize } =
     config;
 
@@ -44,7 +50,11 @@ export const AthleResultsDataGrid = ({ config }: AthleResultsDataGridProps) => {
   const fetchData = async (page: number, pageSize: number) => {
     setLoading(true);
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/athle/result/get-results?page=${page}&page-size=${pageSize}&sort-field=${sortField}&sort-order=${sortOrder}&filter-fields=${filterFields}&filter-values=${filterValues}`
+      `${
+        process.env.NEXT_PUBLIC_API_BASE_URL
+      }/api/athle/result/get-results?page=${page}&page-size=${pageSize}&sort-field=${sortField}&sort-order=${sortOrder}&filter-fields=${filterFields}&filter-values=${filterValues}&event-from-date=${encodeURIComponent(
+        eventFromDate ?? ""
+      )}&event-to-date=${encodeURIComponent(eventToDate ?? "")}`
     );
 
     if (!res.ok) {
