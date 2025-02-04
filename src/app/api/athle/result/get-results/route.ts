@@ -10,16 +10,27 @@ export async function GET(request: Request) {
   const pageSize = searchParams.get("page-size");
   const sortField = searchParams.get("sort-field");
   const sortOrder = searchParams.get("sort-order");
-  const filterField = searchParams.get("filter-field");
-  const filterValue = searchParams.get("filter-value");
+  const filterFields = searchParams.get("filter-fields");
+  const filterValues = searchParams.get("filter-values");
+
+  let safeFilterQuery = "";
+  if (filterFields && filterValues) {
+    const fields = filterFields.split(",");
+    const values = filterValues.split(",");
+    safeFilterQuery = `WHERE ${fields
+      .map(
+        (field, index) =>
+          `${decodeURIComponent(field)} ILIKE '%${decodeURIComponent(
+            values[index]
+          )}%'`
+      )
+      .join(" AND ")}`;
+  }
 
   const safePage = Number(page) || 0;
   const safePageSize = Number(pageSize) || 10;
   const safeSortField = sortField ?? "eventdate";
   const safeSortOrder = sortOrder === "desc" ? "DESC" : "ASC";
-  const safeFilterQuery = filterField
-    ? `WHERE ${filterField} ILIKE '%${filterValue}%'`
-    : "";
 
   try {
     const count = await sql.query(

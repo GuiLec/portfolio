@@ -1,13 +1,27 @@
 import * as React from "react";
 
 import { AthleResultsDataGrid } from "@/app/athle/components/AthleResultsDataGrid/AthleResultsDataGrid";
+import { topIaafScoresConfig } from "@/app/athle/components/AthleResultsDataGrid/config/configs/topIaafScoresConfig";
+import { Box, Typography } from "@mui/material";
 
 const AthlePage = () => {
   return (
     <main>
-      <div style={{ height: "100%", width: "100%" }}>
-        <AthleResultsDataGrid />
-      </div>
+      <Box sx={{ padding: 2 }}>
+        <Typography align="center" variant="h4" component="h1" sx={{ mb: 2 }}>
+          Top performances
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Box sx={{ maxWidth: 850, width: "100%" }}>
+            <AthleResultsDataGrid config={topIaafScoresConfig} />
+          </Box>
+        </Box>
+      </Box>
     </main>
   );
 };

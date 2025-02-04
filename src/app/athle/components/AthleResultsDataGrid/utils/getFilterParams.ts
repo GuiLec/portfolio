@@ -1,12 +1,26 @@
+import {
+  DataGridField,
+  DataGridFilter,
+} from "@/app/athle/components/AthleResultsDataGrid/config/AthleResultsDataGridConfig.interface";
 import { GridFilterModel } from "@mui/x-data-grid";
 
-export const getFilterParams = (
-  filterModel: GridFilterModel
-): { filterField: string; filterValue: string } => {
-  if (filterModel.items.length === 0) {
-    return { filterField: "", filterValue: "" };
+export const getFilterParams = ({
+  filterModel,
+  preFitlters,
+}: {
+  filterModel: GridFilterModel;
+  preFitlters: DataGridFilter[];
+}): { filterFields: string; filterValues: string } => {
+  const filterFieldsArray = [...preFitlters.map((f) => f.field)];
+  const filterValuesArray = [...preFitlters.map((f) => f.value)];
+  if (filterModel.items.length > 0) {
+    const userFilterItem = filterModel.items[0];
+    filterFieldsArray.push(userFilterItem.field as DataGridField);
+    filterValuesArray.push(userFilterItem.value);
   }
 
-  const filterItem = filterModel.items[0];
-  return { filterField: filterItem.field, filterValue: filterItem.value ?? "" };
+  return {
+    filterFields: filterFieldsArray.join(","),
+    filterValues: filterValuesArray.join(","),
+  };
 };
