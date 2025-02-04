@@ -15,9 +15,15 @@ import { useEffect, useState } from "react";
 
 interface AthleResultsDataGridProps {
   config: AthleResultsDataGridConfig;
+  eventFromDate?: string;
+  eventToDate?: string;
 }
 
-export const AthleResultsDataGrid = ({ config }: AthleResultsDataGridProps) => {
+export const AthleResultsDataGrid = ({
+  config,
+  eventFromDate,
+  eventToDate,
+}: AthleResultsDataGridProps) => {
   const { preFitlters, dataGridColumns, preSort, hideFooter, defaultPageSize } =
     config;
 
@@ -30,12 +36,17 @@ export const AthleResultsDataGrid = ({ config }: AthleResultsDataGridProps) => {
     page: 0,
     pageSize: defaultPageSize,
   });
-  const [sortModel, setSortModel] = useState<GridSortModel>([]);
+  const [sortModel, setSortModel] = useState<GridSortModel>([
+    {
+      field: preSort.field,
+      sort: preSort.order,
+    },
+  ]);
   const [filterModel, setFilterModel] = useState<GridFilterModel>({
     items: [],
   });
 
-  const { sortField, sortOrder } = getSortParams({ sortModel, preSort });
+  const { sortField, sortOrder } = getSortParams(sortModel);
   const { filterFields, filterValues } = getFilterParams({
     filterModel,
     preFitlters,
@@ -44,7 +55,11 @@ export const AthleResultsDataGrid = ({ config }: AthleResultsDataGridProps) => {
   const fetchData = async (page: number, pageSize: number) => {
     setLoading(true);
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/athle/result/get-results?page=${page}&page-size=${pageSize}&sort-field=${sortField}&sort-order=${sortOrder}&filter-fields=${filterFields}&filter-values=${filterValues}`
+      `${
+        process.env.NEXT_PUBLIC_API_BASE_URL
+      }/api/athle/result/get-results?page=${page}&page-size=${pageSize}&sort-field=${sortField}&sort-order=${sortOrder}&filter-fields=${filterFields}&filter-values=${filterValues}&event-from-date=${encodeURIComponent(
+        eventFromDate ?? ""
+      )}&event-to-date=${encodeURIComponent(eventToDate ?? "")}`
     );
 
     if (!res.ok) {
@@ -61,7 +76,14 @@ export const AthleResultsDataGrid = ({ config }: AthleResultsDataGridProps) => {
 
   useEffect(() => {
     fetchData(paginationModel.page, paginationModel.pageSize);
-  }, [paginationModel, sortModel, filterModel]);
+  }, [
+    paginationModel,
+    sortModel,
+    filterModel,
+    config,
+    eventFromDate,
+    eventToDate,
+  ]);
 
   return (
     <DataGrid
