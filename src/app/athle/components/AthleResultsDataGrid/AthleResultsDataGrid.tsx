@@ -1,4 +1,5 @@
 "use client";
+import { AthleResultsDataGridConfig } from "@/app/athle/components/AthleResultsDataGrid/config/AthleResultsDataGridConfig.interface";
 import { getFilterParams } from "@/app/athle/components/AthleResultsDataGrid/utils/getFilterParams";
 import { getSortParams } from "@/app/athle/components/AthleResultsDataGrid/utils/getSortParams";
 import { adaptResult } from "@/modules/result/adaptResult";
@@ -86,7 +87,13 @@ const columns: GridColDef[] = [
   },
 ];
 
-export const AthleResultsDataGrid = () => {
+interface AthleResultsDataGridProps {
+  config: AthleResultsDataGridConfig;
+}
+
+export const AthleResultsDataGrid = ({ config }: AthleResultsDataGridProps) => {
+  const { preFitlters } = config;
+
   const [rows, setRows] = useState<Result[]>([]);
   const [rowCount, setRowCount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -100,7 +107,10 @@ export const AthleResultsDataGrid = () => {
   });
 
   const { sortField, sortOrder } = getSortParams(sortModel);
-  const { filterFields, filterValues } = getFilterParams(filterModel);
+  const { filterFields, filterValues } = getFilterParams({
+    filterModel,
+    preFitlters,
+  });
 
   const fetchData = async (page: number, pageSize: number) => {
     setLoading(true);
