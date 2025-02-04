@@ -100,12 +100,12 @@ export const AthleResultsDataGrid = () => {
   });
 
   const { sortField, sortOrder } = getSortParams(sortModel);
-  const { filterField, filterValue } = getFilterParams(filterModel);
+  const { filterFields, filterValues } = getFilterParams(filterModel);
 
   const fetchData = async (page: number, pageSize: number) => {
     setLoading(true);
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/athle/result/get-results?page=${page}&page-size=${pageSize}&sort-field=${sortField}&sort-order=${sortOrder}&filter-field=${filterField}&filter-value=${filterValue}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/athle/result/get-results?page=${page}&page-size=${pageSize}&sort-field=${sortField}&sort-order=${sortOrder}&filter-fields=${filterFields}&filter-values=${filterValues}`
     );
 
     if (!res.ok) {
@@ -128,7 +128,6 @@ export const AthleResultsDataGrid = () => {
     <DataGrid
       rows={rows}
       columns={columns}
-      pagination
       paginationMode="server"
       sortingMode="server"
       filterMode="server"
