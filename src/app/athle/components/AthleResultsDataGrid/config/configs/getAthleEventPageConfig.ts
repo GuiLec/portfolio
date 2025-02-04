@@ -1,17 +1,25 @@
-import { AthleResultsDataGridConfig } from "@/app/athle/components/AthleResultsDataGrid/config/AthleResultsDataGridConfig.interface";
+import {
+  AthleResultsDataGridConfig,
+  DataGridFilter,
+} from "@/app/athle/components/AthleResultsDataGrid/config/AthleResultsDataGridConfig.interface";
 import { eventMapper } from "@/modules/event/eventMapper";
 import { AthleEvent } from "@/modules/event/interface";
 
 export const getAthleEventPageConfig = ({
   athleEvent,
+  gender,
 }: {
   athleEvent: AthleEvent;
+  gender: string;
 }): AthleResultsDataGridConfig => ({
   preFitlters: [
     {
       field: "eventType",
       value: eventMapper[athleEvent].eventType,
     },
+    ...((["M", "F"].includes(gender)
+      ? [{ field: "gender", value: gender }]
+      : []) as DataGridFilter[]),
   ],
   dataGridColumns: [
     {

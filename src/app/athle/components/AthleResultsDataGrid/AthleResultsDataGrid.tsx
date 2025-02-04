@@ -76,7 +76,14 @@ export const AthleResultsDataGrid = ({
 
   useEffect(() => {
     fetchData(paginationModel.page, paginationModel.pageSize);
-  }, [paginationModel, sortModel, filterModel]);
+  }, [
+    paginationModel,
+    sortModel,
+    filterModel,
+    config,
+    eventFromDate,
+    eventToDate,
+  ]);
 
   return (
     <DataGrid
