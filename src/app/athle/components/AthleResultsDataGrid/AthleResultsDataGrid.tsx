@@ -1,98 +1,26 @@
 "use client";
 import { AthleResultsDataGridConfig } from "@/app/athle/components/AthleResultsDataGrid/config/AthleResultsDataGridConfig.interface";
 import { getFilterParams } from "@/app/athle/components/AthleResultsDataGrid/utils/getFilterParams";
+import { getGridColumns } from "@/app/athle/components/AthleResultsDataGrid/utils/getGridColumns";
 import { getSortParams } from "@/app/athle/components/AthleResultsDataGrid/utils/getSortParams";
 import { adaptResult } from "@/modules/result/adaptResult";
 import { GetResultsResponse, Result } from "@/modules/result/result.type";
-import { formatTime } from "@/utils/formatTime";
 import {
   DataGrid,
-  getGridStringOperators,
-  GridColDef,
   GridFilterModel,
   GridPaginationModel,
   GridSortModel,
 } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 
-const columns: GridColDef[] = [
-  {
-    field: "fullName",
-    headerName: "Full name",
-    width: 250,
-    filterOperators: getGridStringOperators().filter(
-      (operator) => operator.value === "contains"
-    ),
-  },
-  { field: "eventType", headerName: "Type", width: 150 },
-  {
-    field: "score",
-    headerName: "Score",
-    filterable: false,
-    type: "number",
-    width: 130,
-    valueFormatter: (score) => {
-      return formatTime(score);
-    },
-  },
-  {
-    field: "eventDate",
-    headerName: "Date",
-    type: "date",
-    width: 130,
-    filterable: false,
-  },
-  { field: "eventLocation", headerName: "Location", width: 130 },
-  {
-    field: "resultAgeCategory",
-    headerName: "Category",
-    width: 100,
-  },
-  {
-    field: "athleteYear",
-    headerName: "Birth",
-    width: 100,
-  },
-  {
-    field: "club",
-    headerName: "Club",
-    width: 130,
-  },
-  {
-    field: "clubRegion",
-    headerName: "Region",
-    width: 130,
-  },
-  {
-    field: "clubDepartement",
-    headerName: "Department",
-    width: 130,
-  },
-  {
-    field: "iaafScore",
-    headerName: "IAAF",
-    filterable: false,
-    type: "number",
-    width: 130,
-  },
-  {
-    field: "gender",
-    headerName: "Gender",
-    width: 100,
-  },
-  {
-    field: "nationality",
-    headerName: "Nationality",
-    width: 130,
-  },
-];
-
 interface AthleResultsDataGridProps {
   config: AthleResultsDataGridConfig;
 }
 
 export const AthleResultsDataGrid = ({ config }: AthleResultsDataGridProps) => {
-  const { preFitlters } = config;
+  const { preFitlters, dataGridColumns } = config;
+
+  const columns = getGridColumns(dataGridColumns);
 
   const [rows, setRows] = useState<Result[]>([]);
   const [rowCount, setRowCount] = useState(0);

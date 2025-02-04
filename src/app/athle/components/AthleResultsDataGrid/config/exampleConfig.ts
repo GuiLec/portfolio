@@ -15,4 +15,21 @@ export const exampleConfig: AthleResultsDataGridConfig = {
       value: "VEF",
     },
   ],
+  dataGridColumns: [
+    {
+      field: "fullName",
+    },
+    {
+      field: "score",
+    },
+    {
+      field: "eventType",
+    },
+    {
+      field: "eventLocation",
+    },
+    {
+      field: "eventDate",
+    },
+  ],
 };
