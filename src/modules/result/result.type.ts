@@ -11,6 +11,8 @@ export interface Result {
   eventDate: Date;
   eventLocation: string;
   iaafScore: number;
+  gender: "M" | "F";
+  nationality: string;
 }
 
 export interface GetResultsResponse {
@@ -32,4 +34,6 @@ export interface RawResult {
   eventdate: string | null;
   eventlocation: string | null;
   iaafscore: string | null;
+  gender: string | null;
+  nationality: string | null;
 }

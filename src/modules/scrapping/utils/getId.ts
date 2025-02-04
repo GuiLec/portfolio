@@ -1,11 +1,12 @@
 export const getId = ({
-  fullName,
+  rawFullName,
   rawEventDate,
   eventLocation,
   rawScore,
 }: {
-  fullName: string;
+  rawFullName: string;
   rawEventDate: string;
   eventLocation: string;
   rawScore: string;
-}) => `${rawEventDate}-${eventLocation}-${rawScore}-${fullName}`.slice(0, 50);
+}) =>
+  `${rawEventDate}-${eventLocation}-${rawScore}-${rawFullName}`.slice(0, 50);

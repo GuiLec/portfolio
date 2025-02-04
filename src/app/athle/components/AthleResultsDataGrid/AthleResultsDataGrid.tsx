@@ -74,6 +74,16 @@ const columns: GridColDef[] = [
     type: "number",
     width: 130,
   },
+  {
+    field: "gender",
+    headerName: "Gender",
+    width: 100,
+  },
+  {
+    field: "nationality",
+    headerName: "Nationality",
+    width: 130,
+  },
 ];
 
 export const AthleResultsDataGrid = () => {
@@ -82,7 +92,7 @@ export const AthleResultsDataGrid = () => {
   const [loading, setLoading] = useState(false);
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     page: 0,
-    pageSize: 10,
+    pageSize: 100,
   });
   const [sortModel, setSortModel] = useState<GridSortModel>([]);
   const [filterModel, setFilterModel] = useState<GridFilterModel>({

@@ -1,4 +1,5 @@
 import { RawScrapResult } from "@/modules/scrapping/interface";
+import { parseFullName } from "@/modules/scrapping/utils/parseFullName";
 import { getAthleteYear } from "@/modules/scrapping/utils/getAthleteYear";
 import { getEventDate } from "@/modules/scrapping/utils/getEventDate";
 import { getEventType } from "@/modules/scrapping/utils/getEventType";
@@ -6,6 +7,7 @@ import { getId } from "@/modules/scrapping/utils/getId";
 import { parseRawScore } from "@/modules/scrapping/utils/parseRawScore";
 import { calculateIAAFScore } from "@/utils/calculateIAAFScore";
 import { getGenderFromAgeCategory } from "@/utils/getGenderFromAgeCategory";
+import { Result } from "@/modules/result/result.type";
 
 export const adaptRawScrapResult = ({
   rawScrapResult,
@@ -13,8 +15,7 @@ export const adaptRawScrapResult = ({
 }: {
   rawScrapResult: RawScrapResult;
   rawSearchDescription?: string;
-}) => {
-  const fullName = rawScrapResult.fullName ?? "";
+}): Result => {
   const club = rawScrapResult.club ?? "";
   const clubRegion = rawScrapResult.clubRegion ?? "";
   const clubDepartement = rawScrapResult.clubDepartement ?? "";
@@ -24,7 +25,7 @@ export const adaptRawScrapResult = ({
   const eventType = getEventType(rawSearchDescription);
   const score = parseRawScore(rawScrapResult.rawScore);
   const id = getId({
-    fullName,
+    rawFullName: rawScrapResult.fullName ?? "",
     rawEventDate: rawScrapResult.eventDate ?? "",
     eventLocation,
     rawScore: rawScrapResult.rawScore ?? "",
@@ -35,6 +36,9 @@ export const adaptRawScrapResult = ({
     eventType,
     gender: getGenderFromAgeCategory(resultAgeCategory),
   });
+
+  const gender = getGenderFromAgeCategory(resultAgeCategory);
+  const { fullName, nationality } = parseFullName(rawScrapResult.fullName);
 
   return {
     id,
@@ -49,5 +53,7 @@ export const adaptRawScrapResult = ({
     score,
     eventType,
     iaafScore,
+    gender,
+    nationality,
   };
 };

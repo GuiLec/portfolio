@@ -1,5 +1,5 @@
 type Eventtype = "5km" | "10km" | "halfMarathon" | "marathon";
-type Gender = "male" | "female";
+type Gender = "M" | "F";
 
 interface Constants {
   A: number;
@@ -8,20 +8,20 @@ interface Constants {
 
 const constants: { [key: string]: { [key: string]: Constants } } = {
   "5km": {
-    male: { A: 0.00277, B: 1440 },
-    female: { A: 0.0008076, B: 2100 },
+    M: { A: 0.00277, B: 1440 },
+    F: { A: 0.0008076, B: 2100 },
   },
   "10km": {
-    male: { A: 0.0005236, B: 3150 },
-    female: { A: 0.0001711, B: 4500 },
+    M: { A: 0.0005236, B: 3150 },
+    F: { A: 0.0001711, B: 4500 },
   },
   halfMarathon: {
-    male: { A: 0.0000946, B: 7140 },
-    female: { A: 0.00002595, B: 10800 },
+    M: { A: 0.0000946, B: 7140 },
+    F: { A: 0.00002595, B: 10800 },
   },
   marathon: {
-    male: { A: 0.0000201, B: 15300 },
-    female: { A: 0.0000054, B: 23400 },
+    M: { A: 0.0000201, B: 15300 },
+    F: { A: 0.0000054, B: 23400 },
   },
 };
 
