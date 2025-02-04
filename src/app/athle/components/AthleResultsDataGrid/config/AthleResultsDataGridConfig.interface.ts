@@ -15,6 +15,10 @@ export interface DataGridFilter {
 
 export interface DataGridColumn {
   field: DataGridField;
+  headerName?: string;
+  width?: number;
+  filterable?: boolean;
+  sortable?: boolean;
 }
 
 export type DataGridField = keyof Result;
