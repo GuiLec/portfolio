@@ -1,20 +1,7 @@
 import { AthleResultsDataGridConfig } from "@/app/athle/components/AthleResultsDataGrid/config/AthleResultsDataGridConfig.interface";
 
-export const exampleConfig: AthleResultsDataGridConfig = {
-  preFitlters: [
-    {
-      field: "eventLocation",
-      value: "Marrakech",
-    },
-    {
-      field: "eventType",
-      value: "1/2 Marathon",
-    },
-    {
-      field: "resultAgeCategory",
-      value: "VEF",
-    },
-  ],
+export const topIaafScoresConfig: AthleResultsDataGridConfig = {
+  preFitlters: [],
   dataGridColumns: [
     {
       field: "fullName",
