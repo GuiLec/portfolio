@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { AthleEvent } from "@/modules/event/interface";
 import { eventMapper } from "@/modules/event/eventMapper";
+import { HeroSection } from "@/components/atoms/HeroSection/HeroSection";
 
 const cards = Object.values(AthleEvent).map((event) => ({
   id: event,
@@ -25,11 +26,19 @@ const AthlePage = () => {
   const yearEnd = `${currentYear}-12-31`;
   return (
     <main>
-      <Container>
-        <Typography variant="h3" component="h1" sx={{ mb: 2 }}>
-          {`Bienvenue sur le portail running France`}
-        </Typography>
-        <Typography align="center" variant="h5" component="h2" sx={{ mb: 2 }}>
+      <HeroSection
+        title="Bienvenue sur Running France"
+        imageUrl="/images/heroes/jimmy-gressier-semi-marathon-de-paris-2023-running-resultats.jpg"
+      />
+      <Container sx={{ mt: [2, 5] }}>
+        <Typography
+          align="center"
+          variant="h3"
+          component="h2"
+          color="primary.main"
+          fontWeight="bold"
+          sx={{ mb: 2 }}
+        >
           {`Epreuves`}
         </Typography>
         <Box
@@ -66,7 +75,14 @@ const AthlePage = () => {
             </Card>
           ))}
         </Box>
-        <Typography align="center" variant="h5" component="h2" sx={{ mb: 2 }}>
+        <Typography
+          align="center"
+          variant="h3"
+          component="h2"
+          color="primary.main"
+          fontWeight="bold"
+          sx={{ mb: 2 }}
+        >
           {`Top performances ${currentYear}`}
         </Typography>
         <Box

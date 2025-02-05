@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -8,6 +7,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@/theme/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,7 +47,7 @@ export default function RootLayout({
           ></iframe>
         </noscript>
         <CssBaseline />
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
