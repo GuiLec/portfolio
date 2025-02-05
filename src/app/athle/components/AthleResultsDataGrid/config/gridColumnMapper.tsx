@@ -20,11 +20,9 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
         <a
           href={
             params.row.bilanAthlete
-              ? `https://bases.athle.fr/asp.net/athletes.aspx?base=bilans&seq=${params.row.bilanAthlete}`
+              ? `/athle/athlete/${params.row.bilanAthlete}`
               : undefined
           }
-          target="_blank"
-          rel="noreferrer"
         >
           {params.value}
         </a>
