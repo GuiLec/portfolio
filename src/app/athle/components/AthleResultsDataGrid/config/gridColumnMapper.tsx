@@ -15,6 +15,21 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
     filterOperators: getGridStringOperators().filter(
       (operator) => operator.value === "contains"
     ),
+    renderCell: (params) => {
+      return (
+        <a
+          href={
+            params.row.bilanAthlete
+              ? `https://bases.athle.fr/asp.net/athletes.aspx?base=bilans&seq=${params.row.bilanAthlete}`
+              : undefined
+          }
+          target="_blank"
+          rel="noreferrer"
+        >
+          {params.value}
+        </a>
+      );
+    },
   },
   eventType: {
     field: "eventType",
@@ -83,6 +98,11 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
   nationality: {
     field: "nationality",
     headerName: "Nationalité",
+    width: 130,
+  },
+  bilanAthlete: {
+    field: "bilanAthlete",
+    headerName: "Bilan",
     width: 130,
   },
 };

@@ -8,6 +8,7 @@ import { parseRawScore } from "@/modules/scrapping/utils/parseRawScore";
 import { calculateIAAFScore } from "@/utils/calculateIAAFScore";
 import { getGenderFromAgeCategory } from "@/utils/getGenderFromAgeCategory";
 import { Result } from "@/modules/result/result.type";
+import { getBilanAthleteFromHref } from "@/modules/scrapping/utils/getBilanAthleteFromHref";
 
 export const adaptRawScrapResult = ({
   rawScrapResult,
@@ -40,6 +41,8 @@ export const adaptRawScrapResult = ({
   const gender = getGenderFromAgeCategory(resultAgeCategory);
   const { fullName, nationality } = parseFullName(rawScrapResult.fullName);
 
+  const bilanAthlete = getBilanAthleteFromHref(rawScrapResult.athletehref);
+
   return {
     id,
     fullName,
@@ -55,5 +58,6 @@ export const adaptRawScrapResult = ({
     iaafScore,
     gender,
     nationality,
+    bilanAthlete,
   };
 };

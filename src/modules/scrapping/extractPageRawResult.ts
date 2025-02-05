@@ -13,6 +13,7 @@ export const extractPageRawResult = async (page: Page) => {
       const cells = row.querySelectorAll('td[class^="datas"]');
 
       const fullName = cells[3]?.textContent?.trim();
+      const athletehref = cells[3]?.querySelector("a")?.getAttribute("href");
       const club = cells[4]?.textContent?.trim();
       const clubRegion = cells[5]?.textContent?.trim();
       const clubDepartement = cells[6]?.textContent?.trim();
@@ -32,6 +33,7 @@ export const extractPageRawResult = async (page: Page) => {
         athleteYear,
         eventDate,
         eventLocation,
+        athletehref,
       };
     });
 
