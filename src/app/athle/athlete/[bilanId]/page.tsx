@@ -6,8 +6,20 @@ interface EventPageProps {
   };
 }
 
-const EventPage = ({ params }: EventPageProps) => {
+const EventPage = async ({ params }: EventPageProps) => {
   const { bilanId } = params;
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/athle/scrap/athlete?bilan-athlete-id=${bilanId}`
+  );
+
+  if (!res.ok) {
+    return <div>Error fetching data.</div>;
+  }
+
+  const data = await res.json();
+
+  const { athlete } = data;
 
   return (
     <main>
@@ -19,7 +31,7 @@ const EventPage = ({ params }: EventPageProps) => {
           sx={{ mb: 2 }}
           fontWeight="bold"
         >
-          {bilanId}
+          {athlete.fullName}
         </Typography>
       </Container>
     </main>
