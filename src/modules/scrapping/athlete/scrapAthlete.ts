@@ -1,3 +1,5 @@
+import { adapatRawScrapedAthlete } from "@/modules/scrapping/athlete/adapatRawScrapedAthlete";
+
 const isProd = process.env.VERCEL_ENV !== "dev";
 
 export const scrapAthlete = async ({
@@ -41,16 +43,17 @@ export const scrapAthlete = async ({
     `https://bases.athle.fr/asp.net/athletes.aspx?base=bilans&seq=${bilanAthleteId}`
   );
 
-  const { fullName } = await page.evaluate(() => {
-    const fullName =
-      document
-        .querySelector("#ctnContentDetails .titles span")
-        ?.textContent?.trim() ?? "";
+  const rawScrapedAthlete = await page.evaluate(() => {
+    const fullName = document
+      .querySelector("#ctnContentDetails .titles span")
+      ?.textContent?.trim();
 
     return { fullName };
   });
 
   await browser.close();
 
-  return { fullName };
+  const athlete = adapatRawScrapedAthlete(rawScrapedAthlete);
+
+  return athlete;
 };
