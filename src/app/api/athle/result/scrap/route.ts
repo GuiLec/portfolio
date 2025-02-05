@@ -3,7 +3,7 @@ import { addResults } from "@/services/athle/result/addResults";
 
 import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
-import { extractPageResults } from "@/modules/scrapping/extractPageResults";
+import { extractPageResults } from "@/modules/scrapping/result/extractPageResults";
 
 const EVENT_TYPE_PARAMS_MAPPER = {
   ["5 Km Route"]: 252,
