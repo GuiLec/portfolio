@@ -52,8 +52,9 @@ export const addResults = async (results: Result[]) => {
     })
     .join(", ");
 
-  return await sql.query(
-    `INSERT INTO AthleResults 
+  try {
+    return await sql.query(
+      `INSERT INTO AthleResults 
      (id, fullName, club, clubRegion, clubDepartement, athleteYear, resultAgeCategory, eventType, score, eventDate, eventLocation, iaafScore, gender, nationality, bilanAthlete)
      VALUES ${placeholders}
      ON CONFLICT (id) DO UPDATE SET
@@ -71,6 +72,10 @@ export const addResults = async (results: Result[]) => {
        nationality = EXCLUDED.nationality,
        bilanAthlete = EXCLUDED.bilanAthlete
        `,
-    values
-  );
+      values
+    );
+  } catch (error) {
+    console.log("🚀 ~ POST ~ error:", error);
+    console.log("🚀 ~ POST ~ results:", JSON.stringify(results));
+  }
 };

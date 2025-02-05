@@ -20,11 +20,9 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
         <a
           href={
             params.row.bilanAthlete
-              ? `https://bases.athle.fr/asp.net/athletes.aspx?base=bilans&seq=${params.row.bilanAthlete}`
+              ? `/athle/athlete/${params.row.bilanAthlete}`
               : undefined
           }
-          target="_blank"
-          rel="noreferrer"
         >
           {params.value}
         </a>
@@ -34,7 +32,7 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
   eventType: {
     field: "eventType",
     headerName: "Epreuve",
-    width: 150,
+    width: 120,
   },
   score: {
     field: "score",
@@ -50,7 +48,7 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
     field: "eventDate",
     headerName: "Date",
     type: "date",
-    width: 130,
+    width: 110,
     filterable: false,
   },
   eventLocation: {
@@ -92,8 +90,8 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
   },
   gender: {
     field: "gender",
-    headerName: "Sexe",
-    width: 100,
+    headerName: "M/F",
+    width: 70,
   },
   nationality: {
     field: "nationality",

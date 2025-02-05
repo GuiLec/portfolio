@@ -1,4 +1,4 @@
-import { RawScrapResult } from "@/modules/scrapping/interface";
+import { RawScrapResult } from "@/modules/scrapping/result/interface";
 import { parseFullName } from "@/modules/scrapping/utils/parseFullName";
 import { getAthleteYear } from "@/modules/scrapping/utils/getAthleteYear";
 import { getEventDate } from "@/modules/scrapping/utils/getEventDate";
