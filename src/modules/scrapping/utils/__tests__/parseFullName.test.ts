@@ -10,6 +10,7 @@ describe("parseFullName", () => {
     ${"KIPROTICH Abraham"}        | ${""}               | ${"KIPROTICH Abraham"}
     ${"KIPROTICH Abraham ()"}     | ${""}               | ${"KIPROTICH Abraham"}
     ${"SIMON (VIRGINAUD) Nelly"}  | ${""}               | ${"SIMON (VIRGINAUD) Nelly"}
+    ${"RAUHUT Nanny (Janina)"}    | ${""}               | ${"RAUHUT Nanny (Janina)"}
     ${"(KEN)"}                    | ${"KEN"}            | ${""}
     ${null}                       | ${""}               | ${""}
   `(
