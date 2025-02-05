@@ -61,7 +61,7 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
   clubRegion: {
     field: "clubRegion",
     headerName: "Région",
-    width: 130,
+    width: 110,
   },
   clubDepartement: {
     field: "clubDepartement",
