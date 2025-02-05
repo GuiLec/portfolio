@@ -34,7 +34,7 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
   eventType: {
     field: "eventType",
     headerName: "Epreuve",
-    width: 150,
+    width: 120,
   },
   score: {
     field: "score",
@@ -50,7 +50,7 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
     field: "eventDate",
     headerName: "Date",
     type: "date",
-    width: 130,
+    width: 110,
     filterable: false,
   },
   eventLocation: {
@@ -92,8 +92,8 @@ export const gridColumnMapper: Record<DataGridField, GridColDef> = {
   },
   gender: {
     field: "gender",
-    headerName: "Sexe",
-    width: 100,
+    headerName: "M/F",
+    width: 70,
   },
   nationality: {
     field: "nationality",
