@@ -4,21 +4,22 @@ export const parseFullName = (
   fullName: string;
   nationality: string;
 } => {
-  if (!rawFullName) {
-    return {
-      fullName: "",
-      nationality: "",
-    };
+  if (rawFullName == null) {
+    return { fullName: "", nationality: "" };
   }
-  const match = rawFullName.match(/\(([^)]+)\)/);
-  if (!match) {
-    return {
-      fullName: "",
-      nationality: "",
-    };
+
+  const regex = /(.*)\s*\((.*?)\)$/;
+  const match = regex.exec(rawFullName);
+
+  let fullName = "";
+  let nationality = "";
+
+  if (match) {
+    fullName = (match[1] || "").trim();
+    nationality = (match[2] || "").trim().toUpperCase();
+  } else {
+    fullName = rawFullName.trim();
   }
-  return {
-    fullName: rawFullName.replace(match[0], "").trim(),
-    nationality: match[1],
-  };
+
+  return { fullName, nationality };
 };

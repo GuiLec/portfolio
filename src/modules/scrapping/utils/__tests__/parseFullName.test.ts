@@ -1,28 +1,4 @@
-export const parseFullName = (
-  rawFullName?: string | null
-): {
-  fullName: string;
-  nationality: string;
-} => {
-  if (rawFullName == null) {
-    return { fullName: "", nationality: "" };
-  }
-
-  const regex = /(.*)\s*\((.*?)\)$/;
-  const match = regex.exec(rawFullName);
-
-  let fullName = "";
-  let nationality = "";
-
-  if (match) {
-    fullName = (match[1] || "").trim();
-    nationality = (match[2] || "").trim().toUpperCase();
-  } else {
-    fullName = rawFullName.trim();
-  }
-
-  return { fullName, nationality };
-};
+import { parseFullName } from "@/modules/scrapping/utils/parseFullName";
 
 describe("parseFullName", () => {
   it.each`
@@ -33,6 +9,7 @@ describe("parseFullName", () => {
     ${"KIPROTICH Abraham (ken)"}  | ${"KEN"}            | ${"KIPROTICH Abraham"}
     ${"KIPROTICH Abraham"}        | ${""}               | ${"KIPROTICH Abraham"}
     ${"KIPROTICH Abraham ()"}     | ${""}               | ${"KIPROTICH Abraham"}
+    ${"SIMON (VIRGINAUD) Nelly"}  | ${""}               | ${"SIMON (VIRGINAUD) Nelly"}
     ${"(KEN)"}                    | ${"KEN"}            | ${""}
     ${null}                       | ${""}               | ${""}
   `(
