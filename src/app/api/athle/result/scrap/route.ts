@@ -14,7 +14,7 @@ const EVENT_TYPE_PARAMS_MAPPER = {
 
 const MAX_PAGES_TO_SCRAP_BY_SEX_YEAR_AND_EVENT = 100;
 
-const CHUNK_SIZE = 2000;
+const CHUNK_SIZE = 0;
 
 export async function POST(request: Request) {
   const { scrapRequests } = await request.json();
@@ -65,7 +65,12 @@ export async function POST(request: Request) {
         results.push(...newPageResults);
 
         if (results.length > CHUNK_SIZE) {
-          await addResults(results);
+          try {
+            await addResults(results);
+          } catch (error) {
+            console.log("🚀 ~ POST ~ error:", error);
+            console.log("🚀 ~ POST ~ results:", JSON.stringify(results));
+          }
           console.log("🚀 ~ POST ~ CHUNK SENT !");
           results.length = 0;
         }
@@ -83,3 +88,30 @@ export async function POST(request: Request) {
     return NextResponse.json({ error }, { status: 500 });
   }
 }
+
+// [
+//   { year: "2023", eventType: "5 Km route", sex: "M" },
+//   { year: "2023", eventType: "5 Km route", sex: "F" },
+//   { year: "2023", eventType: "10 Km route", sex: "M" },
+//   { year: "2023", eventType: "10 Km route", sex: "F" },
+//   { year: "2023", eventType: "1/2 Marathon", sex: "M" },
+//   { year: "2023", eventType: "1/2 Marathon", sex: "F" },
+//   { year: "2023", eventType: "Marathon", sex: "M" },
+//   { year: "2023", eventType: "Marathon", sex: "F" },
+//   { year: "2024", eventType: "5 Km route", sex: "M" },
+//   { year: "2024", eventType: "5 Km route", sex: "F" },
+//   { year: "2024", eventType: "10 Km route", sex: "M" },
+//   { year: "2024", eventType: "10 Km route", sex: "F" },
+//   { year: "2024", eventType: "1/2 Marathon", sex: "M" },
+//   { year: "2024", eventType: "1/2 Marathon", sex: "F" },
+//   { year: "2024", eventType: "Marathon", sex: "M" },
+//   { year: "2024", eventType: "Marathon", sex: "F" },
+//   { year: "2025", eventType: "5 Km route", sex: "M" },
+//   { year: "2025", eventType: "5 Km route", sex: "F" },
+//   { year: "2025", eventType: "10 Km route", sex: "M" },
+//   { year: "2025", eventType: "10 Km route", sex: "F" },
+//   { year: "2025", eventType: "1/2 Marathon", sex: "M" },
+//   { year: "2025", eventType: "1/2 Marathon", sex: "F" },
+//   { year: "2025", eventType: "Marathon", sex: "M" },
+//   { year: "2025", eventType: "Marathon", sex: "F" },
+// ];
