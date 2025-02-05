@@ -8,10 +8,7 @@ const AthleLayout = ({
 }>) => {
   return (
     <div>
-      <AppBar
-        position="static"
-        sx={{ mb: [2, 5], backgroundColor: "darkgray" }}
-      >
+      <AppBar position="static">
         <Toolbar>
           <Button color="inherit" component="a" href="/">
             <HomeIcon />

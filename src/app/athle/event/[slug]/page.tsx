@@ -39,8 +39,14 @@ const EventPage = ({ params }: EventPageProps) => {
 
   return (
     <main>
-      <Container>
-        <Typography variant="h3" component="h1" sx={{ mb: 2 }}>
+      <Container sx={{ mt: [2, 5] }}>
+        <Typography
+          variant="h2"
+          component="h1"
+          color="primary.main"
+          sx={{ mb: 2 }}
+          fontWeight="bold"
+        >
           {eventMapper[athleEvent].label}
         </Typography>
         <Stack direction={{ xs: "column", sm: "row" }} mb={2} spacing={2}>
