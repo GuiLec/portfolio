@@ -8,7 +8,7 @@ export const parseFullName = (
     return { fullName: "", nationality: "" };
   }
 
-  const regex = /(.*)\s*\((.*?)\)$/;
+  const regex = /(.*)\s*\((.{0,3}?)\)$/;
   const match = regex.exec(rawFullName);
 
   let fullName = "";
