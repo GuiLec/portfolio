@@ -65,12 +65,7 @@ export async function POST(request: Request) {
         results.push(...newPageResults);
 
         if (results.length > CHUNK_SIZE) {
-          try {
-            await addResults(results);
-          } catch (error) {
-            console.log("🚀 ~ POST ~ error:", error);
-            console.log("🚀 ~ POST ~ results:", JSON.stringify(results));
-          }
+          addResults(results);
           console.log("🚀 ~ POST ~ CHUNK SENT !");
           results.length = 0;
         }
@@ -90,28 +85,28 @@ export async function POST(request: Request) {
 }
 
 // [
-//   { year: "2023", eventType: "5 Km route", sex: "M" },
-//   { year: "2023", eventType: "5 Km route", sex: "F" },
-//   { year: "2023", eventType: "10 Km route", sex: "M" },
-//   { year: "2023", eventType: "10 Km route", sex: "F" },
-//   { year: "2023", eventType: "1/2 Marathon", sex: "M" },
-//   { year: "2023", eventType: "1/2 Marathon", sex: "F" },
-//   { year: "2023", eventType: "Marathon", sex: "M" },
-//   { year: "2023", eventType: "Marathon", sex: "F" },
-//   { year: "2024", eventType: "5 Km route", sex: "M" },
-//   { year: "2024", eventType: "5 Km route", sex: "F" },
-//   { year: "2024", eventType: "10 Km route", sex: "M" },
-//   { year: "2024", eventType: "10 Km route", sex: "F" },
-//   { year: "2024", eventType: "1/2 Marathon", sex: "M" },
-//   { year: "2024", eventType: "1/2 Marathon", sex: "F" },
-//   { year: "2024", eventType: "Marathon", sex: "M" },
-//   { year: "2024", eventType: "Marathon", sex: "F" },
-//   { year: "2025", eventType: "5 Km route", sex: "M" },
-//   { year: "2025", eventType: "5 Km route", sex: "F" },
-//   { year: "2025", eventType: "10 Km route", sex: "M" },
-//   { year: "2025", eventType: "10 Km route", sex: "F" },
-//   { year: "2025", eventType: "1/2 Marathon", sex: "M" },
-//   { year: "2025", eventType: "1/2 Marathon", sex: "F" },
-//   { year: "2025", eventType: "Marathon", sex: "M" },
-//   { year: "2025", eventType: "Marathon", sex: "F" },
-// ];
+//   {"year":"2023","eventType":"5 Km Route","sex":"M"},
+//   {"year":"2023","eventType":"5 Km Route","sex":"F"},
+//   {"year":"2023","eventType":"10 Km Route","sex":"M"},
+//   {"year":"2023","eventType":"10 Km Route","sex":"F"},
+//   {"year":"2023","eventType":"1/2 Marathon","sex":"M"},
+//   {"year":"2023","eventType":"1/2 Marathon","sex":"F"},
+//   {"year":"2023","eventType":"Marathon","sex":"M"},
+//   {"year":"2023","eventType":"Marathon","sex":"F"},
+//   {"year":"2024","eventType":"5 Km Route","sex":"M"},
+//   {"year":"2024","eventType":"5 Km Route","sex":"F"},
+//   {"year":"2024","eventType":"10 Km Route","sex":"M"},
+//   {"year":"2024","eventType":"10 Km Route","sex":"F"},
+//   {"year":"2024","eventType":"1/2 Marathon","sex":"M"},
+//   {"year":"2024","eventType":"1/2 Marathon","sex":"F"},
+//   {"year":"2024","eventType":"Marathon","sex":"M"},
+//   {"year":"2024","eventType":"Marathon","sex":"F"},
+//   {"year":"2025","eventType":"5 Km Route","sex":"M"},
+//   {"year":"2025","eventType":"5 Km Route","sex":"F"},
+//   {"year":"2025","eventType":"10 Km Route","sex":"M"},
+//   {"year":"2025","eventType":"10 Km Route","sex":"F"},
+//   {"year":"2025","eventType":"1/2 Marathon","sex":"M"},
+//   {"year":"2025","eventType":"1/2 Marathon","sex":"F"},
+//   {"year":"2025","eventType":"Marathon","sex":"M"},
+//   {"year":"2025","eventType":"Marathon","sex":"F"}
+// ]
