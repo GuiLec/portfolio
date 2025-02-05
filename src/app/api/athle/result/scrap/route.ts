@@ -17,6 +17,7 @@ const MAX_PAGES_TO_SCRAP_BY_SEX_YEAR_AND_EVENT = 100;
 const CHUNK_SIZE = 0;
 
 export async function POST(request: Request) {
+  let totalLegnth = 0;
   const { scrapRequests } = await request.json();
 
   const results: Result[] = [];
@@ -67,6 +68,7 @@ export async function POST(request: Request) {
         if (results.length > CHUNK_SIZE) {
           addResults(results);
           console.log("🚀 ~ POST ~ CHUNK SENT !");
+          totalLegnth += results.length;
           results.length = 0;
         }
       }
@@ -74,10 +76,7 @@ export async function POST(request: Request) {
 
     await browser.close();
 
-    return NextResponse.json(
-      { length: results.length, results },
-      { status: 200 }
-    );
+    return NextResponse.json({ length: totalLegnth }, { status: 200 });
   } catch (error) {
     console.log("🚀 ~ POST ~ error:", error);
     return NextResponse.json({ error }, { status: 500 });
