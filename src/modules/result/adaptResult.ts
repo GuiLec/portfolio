@@ -16,5 +16,6 @@ export const adaptResult = (rawResult: RawResult): Result => {
     iaafScore: Number(rawResult.iaafscore),
     gender: rawResult.gender === "F" ? "F" : "M",
     nationality: rawResult.nationality ?? "",
+    bilanAthlete: rawResult.bilanathlete ?? "",
   };
 };

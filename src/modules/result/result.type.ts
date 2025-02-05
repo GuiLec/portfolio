@@ -13,6 +13,7 @@ export interface Result {
   iaafScore: number;
   gender: "M" | "F";
   nationality: string;
+  bilanAthlete: string;
 }
 
 export interface GetResultsResponse {
@@ -36,4 +37,5 @@ export interface RawResult {
   iaafscore: string | null;
   gender: string | null;
   nationality: string | null;
+  bilanathlete: string | null;
 }

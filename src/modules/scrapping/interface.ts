@@ -8,4 +8,5 @@ export interface RawScrapResult {
   athleteYear: string | undefined;
   eventDate: string | undefined;
   eventLocation: string | undefined;
+  athletehref: string | undefined | null;
 }
