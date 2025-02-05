@@ -13,6 +13,9 @@ export const topIaafScoresConfig: AthleResultsDataGridConfig = {
       field: "eventType",
     },
     {
+      field: "gender",
+    },
+    {
       field: "eventLocation",
     },
     {

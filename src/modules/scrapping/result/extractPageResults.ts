@@ -1,6 +1,6 @@
 import { Result } from "@/modules/result/result.type";
-import { adaptRawScrapResult } from "@/modules/scrapping/adaptRawScrapResult";
-import { extractPageRawResult } from "@/modules/scrapping/extractPageRawResult";
+import { adaptRawScrapResult } from "@/modules/scrapping/result/adaptRawScrapResult";
+import { extractPageRawResult } from "@/modules/scrapping/result/extractPageRawResult";
 import { Page } from "puppeteer";
 
 export const extractPageResults = async (page: Page): Promise<Result[]> => {
